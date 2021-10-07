@@ -76,39 +76,39 @@
                             @csrf
                         <div class="form-group col-md-12">
                             <label for="inputPassword4">First Name</label>
-                            <input type="text" class="form-control" id="expense" name="expense" placeholder="First Name" required>
+                            <input type="text" class="form-control" id="firstname" name="firstname" placeholder="First Name" required>
                         </div>
                         <div class="form-group col-md-12">
                             <label for="inputPassword4">Middle Name</label>
-                            <input type="text" class="form-control" id="expense" name="expense" placeholder="Middle Name" required>
+                            <input type="text" class="form-control" id="middlename" name="middlename" placeholder="Middle Name" required>
                         </div>
                         <div class="form-group col-md-12">
                             <label for="inputPassword4">Last Name</label>
-                            <input type="text" class="form-control" id="expense" name="expense" placeholder="Last Name" required>
+                            <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last Name" required>
                         </div>
                         <div class="form-group col-md-12">
                             <label for="inputPassword4">Asthma Type</label>
-                            <input type="text" class="form-control" id="expense" name="expense" placeholder="Asthma Type" required>
+                            <input type="text" class="form-control" id="asthma_id" name="asthma_id" placeholder="Asthma Type" required>
                         </div>
                         <div class="form-group col-md-12">
                             <label for="inputPassword4">Asthma Level</label>
-                            <input type="text" class="form-control" id="expense" name="expense" placeholder="Asthma Level" required>
+                            <input type="text" class="form-control" id="asthma_level" name="asthma_level" placeholder="Asthma Level" required>
                         </div>
                         <div class="form-group col-md-12">
                             <label for="inputPassword4">Gender</label>
-                            <input type="text" class="form-control" id="expense" name="expense" placeholder="Gender" required>
+                            <input type="text" class="form-control" id="gender" name="gender" placeholder="Gender" required>
                         </div>
                         <div class="form-group col-md-12">
                             <label for="inputPassword4">Age</label>
-                            <input type="text" class="form-control" id="expense" name="expense" placeholder="Age" required>
+                            <input type="text" class="form-control" id="age" name="age" placeholder="Age" required>
                         </div>
                         <div class="form-group col-md-12">
                             <label for="inputPassword4">Contact #</label>
-                            <input type="text" class="form-control" id="expense" name="expense" placeholder="Contact #" required>
+                            <input type="text" class="form-control" id="contact" name="contact" placeholder="Contact #" required>
                         </div>
                         <div class="form-group col-md-12">
                             <label for="inputPassword4">Email</label>
-                            <input type="text" class="form-control" id="expense" name="expense" placeholder="Email" required>
+                            <input type="text" class="form-control" id="email" name="email" placeholder="Email" required>
                         </div>
                     </div>
                     <div class="modal-footer">

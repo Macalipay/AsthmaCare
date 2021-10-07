@@ -8,7 +8,7 @@
     <div class="sidebar-content">
         <div class="sidebar-user">
             <img src="{{ asset('docs/img/avatars/avatar.jpg')}}" class="img-fluid rounded-circle mb-2" alt="Linda Miller" />
-            <div class="font-weight-bold">Linda Miller</div>
+            <div class="font-weight-bold">Haringa Christian</div>
             <small>Doctor</small>
         </div>
 
