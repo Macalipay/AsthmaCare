@@ -45,6 +45,7 @@ Route::group(['prefix' => 'asthma'], function (){
 // TYPE OF ASTHMA
 Route::group(['prefix' => 'mobile'], function (){
     Route::post         ('/register',                    'MobileAppController@register'                    )->name('mobile_app_registration');
+    Route::post         ('/login',                       'MobileAppController@login'                       )->name('mobile_app_login');
 });
 
 Auth::routes();
