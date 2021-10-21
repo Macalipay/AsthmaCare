@@ -42,6 +42,11 @@ Route::group(['prefix' => 'asthma'], function (){
     Route::get          ('/destroy/{id}',                'AsthmaController@destroy'                        )->name('client_destroy');
 });
 
+// TYPE OF ASTHMA
+Route::group(['prefix' => 'mobile'], function (){
+    Route::post         ('/register',                    'MobileAppController@register'                    )->name('mobile_app_registration');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
