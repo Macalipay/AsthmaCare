@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\ModelHasRoles;
 use Illuminate\Support\Facades\Hash;
 use Auth;
 
@@ -25,6 +26,14 @@ class MobileAppController extends Controller
         else {
             $request['password'] = Hash::make($request->password);
             $user = User::create($request->all());
+            $last_id = $user->id;
+
+            $data = ModelHasRoles::create([
+                'role_id' => 3,
+                'model_type' => 'App\User',
+                'model_id' => $last_id,
+            ]);
+
             $message = "success";
         }
         
@@ -36,7 +45,7 @@ class MobileAppController extends Controller
         $message = "";
         $credentials = $request->only('username', 'password');
         if (Auth::attempt($credentials)) {
-            $user = User::where('username', $request->username)->first();
+            $user = User::where('username', $request->username)->with('roles')->first();
             $message = "success";
         }
         else {
