@@ -44,6 +44,11 @@
             </li>
            
             <li class="sidebar-item">
+                <a class="sidebar-link" href="/users">
+                    <i class="align-middle mr-2 fa fa-fw fa-users" style="color: #153d77"></i> <span class="align-middle">User</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
                 <a class="sidebar-link" href="#">
                     <i class="align-middle mr-2 fa fa-fw fa-users" style="color: #153d77"></i> <span class="align-middle">Employee</span>
                 </a>
@@ -88,6 +93,12 @@
             <li class="sidebar-item">
                 <a class="sidebar-link" href="#">
                     <i class="align-middle mr-2 fa fa-fw fa-file-word" style="color: #153d77"></i> <span class="align-middle">Type of Asthma</span>
+                </a>
+            </li>
+           
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="/symptoms">
+                    <i class="align-middle mr-2 fa fa-fw fa-file-word" style="color: #153d77"></i> <span class="align-middle">Symptons</span>
                 </a>
             </li>
         </ul>

@@ -48,6 +48,24 @@ Route::group(['prefix' => 'mobile'], function (){
     Route::post         ('/login',                       'MobileAppController@login'                       )->name('mobile_app_login');
 });
 
+// SYMPTOMS
+Route::group(['prefix' => 'symptoms'], function (){
+    Route::get         ('/',                             'SymptomsController@index'                       )->name('symptoms');
+    Route::post        ('/save',                         'SymptomsController@save'                        )->name('symptoms_save');
+    Route::get         ('/edit/{id}',                    'SymptomsController@edit'                        )->name('symptoms_edit');
+    Route::post        ('/update/{id}',                  'SymptomsController@update'                      )->name('symptoms_update');
+    Route::get         ('/destroy/{id}',                 'SymptomsController@destroy'                     )->name('symptoms_destroy');
+});
+
+// SYMPTOMS
+Route::group(['prefix' => 'users'], function (){
+    Route::get         ('/',                             'UserController@index'                       )->name('user');
+    Route::post        ('/save',                         'UserController@save'                        )->name('user_save');
+    Route::get         ('/edit/{id}',                    'UserController@edit'                        )->name('user_edit');
+    Route::post        ('/update/{id}',                  'UserController@update'                      )->name('user_update');
+    Route::get         ('/destroy/{id}',                 'UserController@destroy'                     )->name('user_destroy');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
