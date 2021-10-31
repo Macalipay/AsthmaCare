@@ -25,6 +25,13 @@ class CreateModelHasRolesTable extends Migration
                 ->onDelete('cascade');
         });
         
+        DB::table('model_has_roles')->insert([
+            [
+                'role_id' => 1, 
+                'model_type' => 'App\User', 
+                'model_id' => '1'
+            ]
+        ]);
     }
 
     /**

@@ -15,6 +15,29 @@
 		}
 	</style>
 	<script src="{{ asset('docs/js/settings.js')}}"></script>
+	@yield('style')
+	
+	<style>
+		a.sidebar-brand {
+			background: #FFFFFF !important;
+		}
+		.wrapper:before {
+			background: #018786 !important;
+		}
+		.splash {
+			background: #018786 !important;
+		}
+		.alert {
+			display: block !important;
+			margin: 0px !important;
+			padding: 10px;
+			margin: 10px !important;
+			width: auto !important;
+		}
+		.alert ul {
+			margin: 0px;
+		}
+	</style>
 </head>
 
 <body>

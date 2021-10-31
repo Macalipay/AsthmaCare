@@ -1,15 +1,12 @@
 <nav id="sidebar" class="sidebar">
     <a class="sidebar-brand" href="#">
-  <svg>
-    <use xlink:href="#ion-ios-pulse-strong"></use>
-  </svg>
-  AsthmaCare
-</a>
+        <img src="/img/logo.png" width="100%" alt="">    
+    </a>
     <div class="sidebar-content">
         <div class="sidebar-user">
-            <img src="{{ asset('docs/img/avatars/avatar.jpg')}}" class="img-fluid rounded-circle mb-2" alt="Linda Miller" />
-            <div class="font-weight-bold">Haringa Christian</div>
-            <small>Doctor</small>
+            {{-- <img src="{{ asset('/img/logo.png')}}" class="img-fluid rounded-circle mb-2" alt="Linda Miller" /> --}}
+            <div class="font-weight-bold">{{ Auth::user()->firstname.' '.Auth::user()->lastname}}</div>
+            <small>Administrator</small>
         </div>
 
         <ul class="sidebar-nav">
@@ -49,8 +46,8 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a class="sidebar-link" href="#">
-                    <i class="align-middle mr-2 fa fa-fw fa-users" style="color: #153d77"></i> <span class="align-middle">Employee</span>
+                <a class="sidebar-link" href="/doctors">
+                    <i class="align-middle mr-2 fa fa-fw fa-users" style="color: #153d77"></i> <span class="align-middle">Doctor</span>
                 </a>
             </li>
 

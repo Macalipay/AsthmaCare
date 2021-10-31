@@ -16,4 +16,5 @@ class UserController extends Controller
         ->orderBy('id', 'desc')->get();
         return view('backend.pages.users', compact('users'));
     }
+
 }

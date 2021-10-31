@@ -59,11 +59,20 @@ Route::group(['prefix' => 'symptoms'], function (){
 
 // SYMPTOMS
 Route::group(['prefix' => 'users'], function (){
-    Route::get         ('/',                             'UserController@index'                       )->name('user');
-    Route::post        ('/save',                         'UserController@save'                        )->name('user_save');
-    Route::get         ('/edit/{id}',                    'UserController@edit'                        )->name('user_edit');
-    Route::post        ('/update/{id}',                  'UserController@update'                      )->name('user_update');
-    Route::get         ('/destroy/{id}',                 'UserController@destroy'                     )->name('user_destroy');
+    Route::get         ('/',                             'UserController@index'                           )->name('user');
+    Route::post        ('/save',                         'UserController@save'                            )->name('user_save');
+    Route::get         ('/edit/{id}',                    'UserController@edit'                            )->name('user_edit');
+    Route::post        ('/update/{id}',                  'UserController@update'                          )->name('user_update');
+    Route::get         ('/destroy/{id}',                 'UserController@destroy'                         )->name('user_destroy');
+});
+
+// DOCTOR
+Route::group(['prefix' => 'doctors'], function (){
+    Route::get         ('/',                             'DoctorController@index'                         )->name('doctor');
+    Route::post        ('/save',                         'DoctorController@save'                          )->name('doctor_save');
+    Route::get         ('/edit/{id}',                    'DoctorController@edit'                          )->name('doctor_edit');
+    Route::post        ('/update/{id}',                  'DoctorController@update'                        )->name('doctor_update');
+    Route::get         ('/destroy/{id}',                 'DoctorController@destroy'                       )->name('doctor_destroy');
 });
 
 Auth::routes();
