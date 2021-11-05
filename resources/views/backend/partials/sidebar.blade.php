@@ -88,7 +88,7 @@
             </li>
            
             <li class="sidebar-item">
-                <a class="sidebar-link" href="#">
+                <a class="sidebar-link" href="/asthma">
                     <i class="align-middle mr-2 fa fa-fw fa-file-word" style="color: #153d77"></i> <span class="align-middle">Type of Asthma</span>
                 </a>
             </li>

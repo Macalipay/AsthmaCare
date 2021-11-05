@@ -18,6 +18,19 @@
 	@yield('style')
 	
 	<style>
+		div.dataTables_wrapper div.dataTables_paginate a {
+			display: inline-block !important;
+			padding: 5px 10px;
+			background: #d5d5d5;
+			color: #000000;
+			border-radius: 3px;
+			margin: 3px;
+		}
+		input[type="search"] , div#datatables_length select{
+			padding: 5px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+		}
 		a.sidebar-brand {
 			background: #FFFFFF !important;
 		}

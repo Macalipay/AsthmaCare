@@ -17,8 +17,12 @@ class CreateAsthmasTable extends Migration
             $table->bigIncrements('id');
             $table->string('asthma');
             $table->string('description');
-            $table->string('symptoms');
+            $table->unsignedBigInteger('symptoms_id');
             $table->timestamps();
+            
+            $table->foreign('symptoms_id')
+                ->references('id')
+                ->on('symptoms');
         });
     }
 

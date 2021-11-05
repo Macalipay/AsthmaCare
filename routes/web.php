@@ -75,6 +75,15 @@ Route::group(['prefix' => 'doctors'], function (){
     Route::get         ('/destroy/{id}',                 'DoctorController@destroy'                       )->name('doctor_destroy');
 });
 
+// DOCTOR
+Route::group(['prefix' => 'types-of-asthma'], function (){
+    Route::get         ('/',                             'TypesOfAsthmaController@index'                         )->name('doctor');
+    Route::post        ('/save',                         'TypesOfAsthmaController@save'                          )->name('doctor_save');
+    Route::get         ('/edit/{id}',                    'TypesOfAsthmaController@edit'                          )->name('doctor_edit');
+    Route::post        ('/update/{id}',                  'TypesOfAsthmaController@update'                        )->name('doctor_update');
+    Route::get         ('/destroy/{id}',                 'TypesOfAsthmaController@destroy'                       )->name('doctor_destroy');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

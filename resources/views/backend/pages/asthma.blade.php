@@ -4,16 +4,16 @@
         <div class="container-fluid">
             <div class="header">
                 <h1 class="header-title">
-                    Doctors
+                    Types of Asthma
                 </h1>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="card-title">Doctor List
+                            <h5 class="card-title">Record List
                                 <button type="button" class="btn btn-primary add" data-toggle="modal" data-target="#defaultModalPrimary" style="float:right">
-                                    Add Doctors
+                                    Add Type
                                 </button>
                             </h5>
                         </div>
@@ -26,27 +26,19 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>Name</th>
-                                                <th>Gender</th>
-                                                <th>Age</th>
-                                                <th>Contact No</th>
-                                                <th>Username</th>
-                                                <th>Email</th>
+                                                <th>Description</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($doctors as $key => $doctor)
+                                            @foreach ($types as $key => $type)
                                                 <tr>
                                                     <td>{{ ++$key}}</td>
-                                                    <td>{{ $doctor->firstname.' '.$doctor->lastname}}</td>
-                                                    <td>{{ $doctor->gender}}</td>
-                                                    <td>{{ $doctor->age}}</td>
-                                                    <td>{{ $doctor->contact_no}}</td>
-                                                    <td>{{ $doctor->username}}</td>
-                                                    <td>{{ $doctor->email}}</td>
+                                                    <td>{{ $type->name}}</td>
+                                                    <td>{{ $type->description}}</td>
                                                     <td class="table-action">
-                                                        <a href="#" class="align-middle fas fa-fw fa-pen edit" title="Edit" data-toggle="modal" data-target="#defaultModalPrimary" id={{$doctor->id}}></a>
-                                                        <a href="#" data-toggle="modal" data-target="#confirmation" onclick="delete_id={{$doctor->id}};"><i class="align-middle fas fa-fw fa-trash"></i></a>
+                                                        <a href="#" class="align-middle fas fa-fw fa-pen edit" title="Edit" data-toggle="modal" data-target="#defaultModalPrimary" id={{$type->id}}></a>
+                                                        <a href="#" data-toggle="modal" data-target="#confirmation" onclick="delete_id={{$type->id}};"><i class="align-middle fas fa-fw fa-trash"></i></a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -78,49 +70,23 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Add Doctor</h5>
+                        <h5 class="modal-title">Add Type</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body m-3">
-                        <form id="modal-form" action="{{url('doctors/save')}}" method="post">
+                        <form id="modal-form" action="{{url('types-of-asthma/save')}}" method="post">
                             @csrf
                         <div class="form-group col-md-12">
-                            <label for="name">Firstname</label>
-                            <input type="text" class="form-control" id="firstname" name="firstname" placeholder="" value="{{ old('firstname') }}" required>
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="" required>
                         </div>
                         <div class="form-group col-md-12">
-                            <label for="name">Middlename</label>
-                            <input type="text" class="form-control" id="middlename" name="middlename" placeholder="" value="{{ old('middlename') }}" required>
+                            <label for="inputPassword4">Description</label>
+                            <textarea name="description" id="description" class="form-control" cols="30" rows="10" placeholder="Enter Description Here" required></textarea>
                         </div>
-                        <div class="form-group col-md-12">
-                            <label for="name">Lastname</label>
-                            <input type="text" class="form-control" id="lastname" name="lastname" placeholder="" value="{{ old('lastname') }}" required>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="name">Gender</label>
-                            <select class="form-control" name="gender" id="gender" required>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="name">Age</label>
-                            <input type="text" class="form-control" id="age" name="age" placeholder="" value="{{ old('age') }}" required>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="name">Contact No</label>
-                            <input type="text" class="form-control" id="contact_no" name="contact_no" placeholder="" value="{{ old('contact_no') }}" required>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="name">Username</label>
-                            <input type="text" class="form-control" id="username" name="username" placeholder="" value="{{ old('username') }}" required>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="name">Email Address</label>
-                            <input type="text" class="form-control" id="email" name="email" placeholder="" value="{{ old('email') }}" required>
-                        </div>
+                        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -142,21 +108,20 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: '/doctors/edit/' + id,
+                url: '/types-of-asthma/edit/' + id,
                 method: 'get',
                 data: {
 
                 },
                 success: function(data) {
-                    $('.modal-title').text('Update Doctor');
+                    $('.modal-title').text('Update Type');
                     $('.submit-button').text('Update');
-                    $.each(data, function() {
-                        $.each(this, function(k, v) {
-                            $('[name ="'+k+'"]').val(v);
+                        $.each(data, function() {
+                            $.each(this, function(k, v) {
+                               $('[name ="'+k+'"]').val(v);
+                            });
                         });
-                    });
-                    console.log(data);
-                    $('#modal-form').attr('action', 'doctors/update/' + data.doctor.id);
+                    $('#modal-form').attr('action', 'types-of-asthma/update/' + data.symptoms.id);
                 }
             });
 
@@ -173,9 +138,9 @@
             });
 
             $('.add').click(function(){
-                $('.modal-title').text('Add Doctor');
+                $('.modal-title').text('Add Type');
                 $('.submit-button').text('Add');
-                $('#modal-form').attr('action', 'doctors/save');
+                $('#modal-form').attr('action', 'types-of-asthma/save');
             })
         });
 
@@ -184,7 +149,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: '/doctors/destroy/' + id,
+                url: '/types-of-asthma/destroy/' + id,
                 method: 'get',
                 data: {
                 },
