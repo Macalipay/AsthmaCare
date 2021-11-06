@@ -7,4 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class Patient extends Model
 {
     //
+    protected $fillable = [
+        'firstname',
+        'middlename',
+        'lastname',
+        'asthma_id',
+        'asthma_level',
+        'gender',
+        'age',
+        'contact',
+        'email'
+    ];
+
+    protected $table = 'patients';
 }

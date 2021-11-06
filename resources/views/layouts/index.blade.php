@@ -18,7 +18,7 @@
                 
                 <div class="logo">
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        <img src="{{ asset('img/logo.jpg') }}" class="logo" alt="AsthmaCare">
+                        <img src="{{ asset('img/logo.png') }}" class="logo" alt="AsthmaCare">
                     </a>
                 </div>
                 

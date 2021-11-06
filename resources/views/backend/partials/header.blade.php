@@ -4,7 +4,6 @@
 </a>
 
     <form class="form-inline d-none d-sm-inline-block">
-        <input class="form-control form-control-lite" type="text" placeholder="Search projects...">
     </form>
 
     <div class="navbar-collapse collapse">

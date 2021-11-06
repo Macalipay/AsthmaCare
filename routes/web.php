@@ -36,10 +36,55 @@ Route::group(['prefix' => 'patient'], function (){
 // TYPE OF ASTHMA
 Route::group(['prefix' => 'asthma'], function (){
     Route::get          ('/',                            'AsthmaController@index'                          )->name('client');
-    Route::post         ('/save',                        'AsthmaController@store'                          )->name('client_store');
+    Route::post         ('/save',                        'AsthmaController@save'                           )->name('client_store');
     Route::get          ('/edit/{id}',                   'AsthmaController@edit'                           )->name('client_edit');
     Route::post         ('/update/{id}',                 'AsthmaController@update'                         )->name('client_update');
     Route::get          ('/destroy/{id}',                'AsthmaController@destroy'                        )->name('client_destroy');
+});
+
+// TYPE OF ASTHMA
+Route::group(['prefix' => 'mobile'], function (){
+    Route::post         ('/register',                    'MobileAppController@register'                    )->name('mobile_app_registration');
+    Route::post         ('/login',                       'MobileAppController@login'                       )->name('mobile_app_login');
+    Route::post         ('/get-doctor',                  'MobileAppController@getDoctor'                   )->name('mobile_app_doctor');
+    Route::post         ('/get-asthma',                  'MobileAppController@getAsthma'                   )->name('mobile_app_asthma');
+    Route::post         ('/set-appointment',             'MobileAppController@setAppointment'              )->name('mobile_app_appointment');
+});
+
+// SYMPTOMS
+Route::group(['prefix' => 'symptoms'], function (){
+    Route::get         ('/',                             'SymptomsController@index'                       )->name('symptoms');
+    Route::post        ('/save',                         'SymptomsController@save'                        )->name('symptoms_save');
+    Route::get         ('/edit/{id}',                    'SymptomsController@edit'                        )->name('symptoms_edit');
+    Route::post        ('/update/{id}',                  'SymptomsController@update'                      )->name('symptoms_update');
+    Route::get         ('/destroy/{id}',                 'SymptomsController@destroy'                     )->name('symptoms_destroy');
+});
+
+// SYMPTOMS
+Route::group(['prefix' => 'users'], function (){
+    Route::get         ('/',                             'UserController@index'                           )->name('user');
+    Route::post        ('/save',                         'UserController@save'                            )->name('user_save');
+    Route::get         ('/edit/{id}',                    'UserController@edit'                            )->name('user_edit');
+    Route::post        ('/update/{id}',                  'UserController@update'                          )->name('user_update');
+    Route::get         ('/destroy/{id}',                 'UserController@destroy'                         )->name('user_destroy');
+});
+
+// DOCTOR
+Route::group(['prefix' => 'doctors'], function (){
+    Route::get         ('/',                             'DoctorController@index'                         )->name('doctor');
+    Route::post        ('/save',                         'DoctorController@save'                          )->name('doctor_save');
+    Route::get         ('/edit/{id}',                    'DoctorController@edit'                          )->name('doctor_edit');
+    Route::post        ('/update/{id}',                  'DoctorController@update'                        )->name('doctor_update');
+    Route::get         ('/destroy/{id}',                 'DoctorController@destroy'                       )->name('doctor_destroy');
+});
+
+// DOCTOR
+Route::group(['prefix' => 'types-of-asthma'], function (){
+    Route::get         ('/',                             'TypesOfAsthmaController@index'                         )->name('doctor');
+    Route::post        ('/save',                         'TypesOfAsthmaController@save'                          )->name('doctor_save');
+    Route::get         ('/edit/{id}',                    'TypesOfAsthmaController@edit'                          )->name('doctor_edit');
+    Route::post        ('/update/{id}',                  'TypesOfAsthmaController@update'                        )->name('doctor_update');
+    Route::get         ('/destroy/{id}',                 'TypesOfAsthmaController@destroy'                       )->name('doctor_destroy');
 });
 
 Auth::routes();

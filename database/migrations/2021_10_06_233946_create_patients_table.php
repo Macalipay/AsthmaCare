@@ -27,9 +27,9 @@ class CreatePatientsTable extends Migration
             $table->timestamps();
 
             $table->foreign('asthma_id')
-            ->references('id')
-            ->on('asthmas');
-        });
+                ->references('id')
+                ->on('asthmas');
+            });
     }
 
     /**

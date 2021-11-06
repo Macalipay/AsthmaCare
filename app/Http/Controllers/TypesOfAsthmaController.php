@@ -2,40 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use App\Asthma;
-use App\Symptoms;
 use Illuminate\Http\Request;
+use App\TypesOfAsthma;
 
-class AsthmaController extends Controller
+class TypesOfAsthmaController extends Controller
 {
-    
+    //
     public function index() {
-        $types = Asthma::orderBy('id', 'desc')->get();
-        $symptoms = Symptoms::orderBy('id', 'desc')->get();
-        return view('backend.pages.asthma', compact('types', 'symptoms'));
+        $types = TypesOfAsthma::orderBy('id', 'desc')->get();
+        return view('backend.pages.types', compact('types'));
     }
 
     public function save(Request $request) {
-        $symptoms = Asthma::create($request->all());
+        $symptoms = TypesOfAsthma::create($request->all());
         
         return redirect()->back()->with('success','Successfully Added');
     }
     
     public function edit($id)
     {
-        $symptoms = Asthma::where('id', $id)->orderBy('id')->firstOrFail();
+        $symptoms = TypesOfAsthma::where('id', $id)->orderBy('id')->firstOrFail();
         return response()->json(compact('symptoms'));
     }
     
     public function update(Request $request, $id)
     {
-        Asthma::find($id)->update($request->all());
+        TypesOfAsthma::find($id)->update($request->all());
         return redirect()->back()->with('success','Successfully Updated');
     }
     
     public function destroy($id)
     {
-        $symptoms = Asthma::find($id);
+        $symptoms = TypesOfAsthma::find($id);
         $symptoms->delete();
         return redirect()->back()->with('success','Successfully Deleted!');
     }
