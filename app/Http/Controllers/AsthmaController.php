@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Asthma;
+use App\Symptoms;
 use Illuminate\Http\Request;
 
 class AsthmaController extends Controller
@@ -10,7 +11,8 @@ class AsthmaController extends Controller
     
     public function index() {
         $types = Asthma::orderBy('id', 'desc')->get();
-        return view('backend.pages.asthma', compact('types'));
+        $symptoms = Symptoms::orderBy('id', 'desc')->get();
+        return view('backend.pages.asthma', compact('types', 'symptoms'));
     }
 
     public function save(Request $request) {

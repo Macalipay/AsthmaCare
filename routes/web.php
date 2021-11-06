@@ -36,7 +36,7 @@ Route::group(['prefix' => 'patient'], function (){
 // TYPE OF ASTHMA
 Route::group(['prefix' => 'asthma'], function (){
     Route::get          ('/',                            'AsthmaController@index'                          )->name('client');
-    Route::post         ('/save',                        'AsthmaController@store'                          )->name('client_store');
+    Route::post         ('/save',                        'AsthmaController@save'                           )->name('client_store');
     Route::get          ('/edit/{id}',                   'AsthmaController@edit'                           )->name('client_edit');
     Route::post         ('/update/{id}',                 'AsthmaController@update'                         )->name('client_update');
     Route::get          ('/destroy/{id}',                'AsthmaController@destroy'                        )->name('client_destroy');
@@ -46,6 +46,9 @@ Route::group(['prefix' => 'asthma'], function (){
 Route::group(['prefix' => 'mobile'], function (){
     Route::post         ('/register',                    'MobileAppController@register'                    )->name('mobile_app_registration');
     Route::post         ('/login',                       'MobileAppController@login'                       )->name('mobile_app_login');
+    Route::post         ('/get-doctor',                  'MobileAppController@getDoctor'                   )->name('mobile_app_doctor');
+    Route::post         ('/get-asthma',                  'MobileAppController@getAsthma'                   )->name('mobile_app_asthma');
+    Route::post         ('/set-appointment',             'MobileAppController@setAppointment'              )->name('mobile_app_appointment');
 });
 
 // SYMPTOMS

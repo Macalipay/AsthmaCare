@@ -8,7 +8,7 @@ class Asthma extends Model
 {
     //
     protected $fillable = [
-        'name',
+        'asthma',
         'description',
         'symptoms_id'
     ];

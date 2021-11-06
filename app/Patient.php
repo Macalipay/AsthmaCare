@@ -8,9 +8,16 @@ class Patient extends Model
 {
     //
     protected $fillable = [
-        'name',
-        'description'
+        'firstname',
+        'middlename',
+        'lastname',
+        'asthma_id',
+        'asthma_level',
+        'gender',
+        'age',
+        'contact',
+        'email'
     ];
 
-    protected $table = 'types_of_asthma';
+    protected $table = 'patients';
 }

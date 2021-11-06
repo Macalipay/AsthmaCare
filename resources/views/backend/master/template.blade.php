@@ -13,6 +13,9 @@
 		body {
 			opacity: 0;
 		}
+		.alert p {
+			margin: 0px !important;
+		}
 	</style>
 	<script src="{{ asset('docs/js/settings.js')}}"></script>
 	@yield('style')

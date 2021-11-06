@@ -34,7 +34,7 @@
                                             @foreach ($types as $key => $type)
                                                 <tr>
                                                     <td>{{ ++$key}}</td>
-                                                    <td>{{ $type->name}}</td>
+                                                    <td>{{ $type->asthma}}</td>
                                                     <td>{{ $type->description}}</td>
                                                     <td class="table-action">
                                                         <a href="#" class="align-middle fas fa-fw fa-pen edit" title="Edit" data-toggle="modal" data-target="#defaultModalPrimary" id={{$type->id}}></a>
@@ -76,15 +76,24 @@
                         </button>
                     </div>
                     <div class="modal-body m-3">
-                        <form id="modal-form" action="{{url('types-of-asthma/save')}}" method="post">
+                        <form id="modal-form" action="{{url('asthma/save')}}" method="post">
                             @csrf
                         <div class="form-group col-md-12">
                             <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="" required>
+                            <input type="text" class="form-control" id="asthma" name="asthma" placeholder="" required>
                         </div>
                         <div class="form-group col-md-12">
                             <label for="inputPassword4">Description</label>
                             <textarea name="description" id="description" class="form-control" cols="30" rows="10" placeholder="Enter Description Here" required></textarea>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="inputPassword4">Description</label>
+                            <select name="symptoms_id" id="symptoms_id" class="form-control" required>
+                                <option value=""></option>
+                                @foreach ($symptoms as $symptom)
+                                    <option value="{{ $symptom->id }}">{{ $symptom->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         
                     </div>
@@ -108,7 +117,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: '/types-of-asthma/edit/' + id,
+                url: '/asthma/edit/' + id,
                 method: 'get',
                 data: {
 
@@ -121,7 +130,7 @@
                                $('[name ="'+k+'"]').val(v);
                             });
                         });
-                    $('#modal-form').attr('action', 'types-of-asthma/update/' + data.symptoms.id);
+                    $('#modal-form').attr('action', 'asthma/update/' + data.symptoms.id);
                 }
             });
 
@@ -140,7 +149,7 @@
             $('.add').click(function(){
                 $('.modal-title').text('Add Type');
                 $('.submit-button').text('Add');
-                $('#modal-form').attr('action', 'types-of-asthma/save');
+                $('#modal-form').attr('action', 'asthma/save');
             })
         });
 
@@ -149,7 +158,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: '/types-of-asthma/destroy/' + id,
+                url: '/asthma/destroy/' + id,
                 method: 'get',
                 data: {
                 },
