@@ -12,7 +12,8 @@ class Appointment extends Model
         'time',
         'doctor_id',
         'remarks',
-        'patient_id'
+        'patient_id',
+        'user_id'
     ];
 
     protected $table = 'appointment';

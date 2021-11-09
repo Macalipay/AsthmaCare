@@ -92,6 +92,7 @@ class MobileAppController extends Controller
             "doctor_id" => $request->doctor_id,
             "remarks" => $request->remarks,
             "patient_id" => $last_id,
+            "user_id" => $request->user_id
         );
 
         $appointment_save = Appointment::create($appointment);

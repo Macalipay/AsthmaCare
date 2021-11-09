@@ -20,6 +20,7 @@ class CreateAppointmentTable extends Migration
             $table->unsignedBigInteger('doctor_id');
             $table->string('remarks')->nullable();
             $table->unsignedBigInteger('patient_id');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
             
             $table->foreign('doctor_id')
@@ -29,6 +30,10 @@ class CreateAppointmentTable extends Migration
             $table->foreign('patient_id')
                 ->references('id')
                 ->on('patients');
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users');
         });
     }
 
