@@ -41,7 +41,7 @@ class MobileAppController extends Controller
         }
         
 
-        return array("message"=>$message);
+        return array("message"=>$message, "id"=>$last_id);
     }
 
     protected function login(Request $request) {

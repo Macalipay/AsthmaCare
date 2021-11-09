@@ -18,7 +18,7 @@ class CreateAppointmentTable extends Migration
             $table->string('date');
             $table->string('time');
             $table->unsignedBigInteger('doctor_id');
-            $table->string('remarks')->nullable();
+            $table->longText('remarks')->nullable();
             $table->unsignedBigInteger('patient_id');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
