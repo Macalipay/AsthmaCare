@@ -8,6 +8,7 @@ use App\asthma;
 use App\Patient;
 use App\Appointment;
 use App\ModelHasRoles;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Auth;
 
@@ -66,7 +67,7 @@ class MobileAppController extends Controller
     }
 
     protected function getAsthma() {
-        $asthma = asthma::get();
+        $asthma = asthma::with('symptoms')->get();
         return array("data"=>$asthma);
     }
 
@@ -92,13 +93,48 @@ class MobileAppController extends Controller
             "doctor_id" => $request->doctor_id,
             "remarks" => $request->remarks,
             "patient_id" => $last_id,
-            "user_id" => $request->user_id
+            "user_id" => $request->user_id,
+            "status" => 'pending'
         );
 
         $appointment_save = Appointment::create($appointment);
         
         return array("message"=>"success");
 
+    }
+    
+    protected function getAppointment(Request $request) {
+        $appointment = Appointment::with('patient')->where('user_id', $request->id)->orderBy('date', 'desc')->get();
+        
+        return array("data"=>$appointment);
+    }
+
+    protected function getIncomingPatient(Request $request) {
+
+        $appointment = Appointment::with('patient')->where('doctor_id', $request->id)->where('status', 'approved')->whereDate('date', '=', Carbon::today()->toDateString())->orderBy('date', 'desc')->get();
+        return array("data"=>$appointment);
+        
+    }
+
+    protected function getPatientList(Request $request) {
+
+        $patient = Patient::with('asthma')->orderBy('firstname', 'asc')->get();
+        return array("data"=>$patient);
+        
+    }
+    
+    protected function getIncomingAppointment(Request $request) {
+
+        $appointment = Appointment::with('patient')->where('doctor_id', $request->id)->where('status', 'approved')->orderBy('date', 'desc')->get();
+        return array("data"=>$appointment);
+        
+    }
+
+    protected function getPatientHistory(Request $request) {
+
+        $appointment = Appointment::with('patient')->where('doctor_id', $request->id)->where('status', 'done')->orderBy('date', 'desc')->get();
+        return array("data"=>$appointment);
+        
     }
 
 }

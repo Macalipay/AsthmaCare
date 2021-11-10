@@ -20,4 +20,9 @@ class Patient extends Model
     ];
 
     protected $table = 'patients';
+
+    public function asthma()
+    {
+        return $this->belongsTo(Asthma::class, 'asthma_id', 'id');
+    }
 }

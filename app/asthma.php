@@ -13,4 +13,9 @@ class Asthma extends Model
         'symptoms_id'
     ];
 
+    public function symptoms()
+    {
+        return $this->belongsTo(Symptoms::class, 'symptoms_id', 'id');
+    }
+
 }

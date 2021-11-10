@@ -48,6 +48,11 @@ Route::group(['prefix' => 'mobile'], function (){
     Route::post         ('/login',                       'MobileAppController@login'                       )->name('mobile_app_login');
     Route::post         ('/get-doctor',                  'MobileAppController@getDoctor'                   )->name('mobile_app_doctor');
     Route::post         ('/get-asthma',                  'MobileAppController@getAsthma'                   )->name('mobile_app_asthma');
+    Route::post         ('/get-appointment',             'MobileAppController@getAppointment'              )->name('mobile_app_appointment');
+    Route::post         ('/get-incoming-patient',        'MobileAppController@getIncomingPatient'          )->name('mobile_app_appointment');
+    Route::post         ('/get-incoming-appointment',    'MobileAppController@getIncomingAppointment'      )->name('mobile_app_appointment');
+    Route::post         ('/get-history',                 'MobileAppController@getPatientHistory'           )->name('mobile_app_history');
+    Route::post         ('/get-monitoring',              'MobileAppController@getPatientList'              )->name('mobile_app_patient');
     Route::post         ('/set-appointment',             'MobileAppController@setAppointment'              )->name('mobile_app_appointment');
 });
 

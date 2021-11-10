@@ -13,8 +13,14 @@ class Appointment extends Model
         'doctor_id',
         'remarks',
         'patient_id',
-        'user_id'
+        'user_id',
+        'status'
     ];
 
     protected $table = 'appointment';
+    
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class, 'patient_id', 'id');
+    }
 }
