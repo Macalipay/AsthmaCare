@@ -11,6 +11,7 @@
 
         <ul class="sidebar-nav">
             <li class="sidebar-header">
+                
                 Main
             </li>
             <li class="sidebar-item">
@@ -18,7 +19,6 @@
                     <i class="align-middle mr-2 fa fa-fw fa-chart-pie" style="color: #153d77"></i> <span class="align-middle">Dashboard</span>
                 </a>
             </li>
-           
 
             <li class="sidebar-header">
                 Monitoring
