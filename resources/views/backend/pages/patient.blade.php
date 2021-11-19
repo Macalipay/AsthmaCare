@@ -40,7 +40,7 @@
                                                 <tr>
                                                     <td>{{ ++$key}}</td>
                                                     <td>{{ $patient->firstname . ' ' . $patient->middlename . ' ' . $patient->lastname}}</td>
-                                                    <td>{{ $patient->asthma_id}}</td>
+                                                    <td>{{ $patient->asthma->asthma}}</td>
                                                     <td>{{ $patient->asthma_level}}</td>
                                                     <td>{{ $patient->gender}}</td>
                                                     <td>{{ $patient->age}}</td>
@@ -87,16 +87,23 @@
                             <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last Name" required>
                         </div>
                         <div class="form-group col-md-12">
-                            <label for="inputPassword4">Asthma Type</label>
-                            <input type="text" class="form-control" id="asthma_id" name="asthma_id" placeholder="Asthma Type" required>
+                            <label for="name">Gender</label>
+                            <select class="form-control" name="gender" id="gender" required>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="name">Type of Asthma</label>
+                            <select class="form-control" name="asthma_id" id="asthma_id" required>
+                                @foreach ($asthmas as $asthma)
+                                    <option value="{{ $asthma->id }}">{{$asthma->asthma}}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group col-md-12">
                             <label for="inputPassword4">Asthma Level</label>
                             <input type="text" class="form-control" id="asthma_level" name="asthma_level" placeholder="Asthma Level" required>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="inputPassword4">Gender</label>
-                            <input type="text" class="form-control" id="gender" name="gender" placeholder="Gender" required>
                         </div>
                         <div class="form-group col-md-12">
                             <label for="inputPassword4">Age</label>

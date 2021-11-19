@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use App\User;
-use App\ModelHasRoles;
+use App\ModelHasRole;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 
@@ -15,7 +15,7 @@ class DoctorController extends Controller
     protected function index() {
 
         $doctors = User::with('roles')->whereHas('roles', function(Builder $query) {
-            $query->where('role_id','=','2');
+            $query->where('role_id','=','3');
         })->orderBy('id', 'desc')->get();
 
         return view('backend.pages.doctors', compact('doctors'));
@@ -23,8 +23,6 @@ class DoctorController extends Controller
     }
 
     protected function save(Request $request) {
-
-        
         $input['email'] = $request->email;
         $input['username'] = $request->username;
 
@@ -45,8 +43,8 @@ class DoctorController extends Controller
             $doctor = User::create($request->all());
             $last_id = $doctor->id;
     
-            $data = ModelHasRoles::create([
-                'role_id' => 2,
+            $data = ModelHasRole::create([
+                'role_id' => 3,
                 'model_type' => 'App\User',
                 'model_id' => $last_id,
             ]);
@@ -70,7 +68,7 @@ class DoctorController extends Controller
     public function destroy($id)
     {
         $doctor = User::find($id);
-        $roles = ModelHasRoles::where('model_id', $id);
+        $roles = ModelHasRole::where('model_id', $id);
         $doctor->delete();
         $roles->delete();
         return redirect()->back()->with('success','Successfully Deleted!');

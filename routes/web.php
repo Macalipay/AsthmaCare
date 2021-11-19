@@ -33,6 +33,16 @@ Route::group(['prefix' => 'patient'], function (){
     Route::get          ('/destroy/{id}',                'PatientController@destroy'                        )->name('client_destroy');
 });
 
+// CLINIC
+Route::group(['prefix' => 'company'], function (){
+    Route::get          ('/',                            'CompanyController@index'                          )->name('client');
+    Route::post         ('/save',                        'CompanyController@store'                          )->name('client_store');
+    Route::get          ('/edit/{id}',                   'CompanyController@edit'                           )->name('client_edit');
+    Route::post         ('/update/{id}',                 'CompanyController@update'                         )->name('client_update');
+    Route::get          ('/destroy/{id}',                'CompanyController@destroy'                        )->name('client_destroy');
+    Route::get          ('/status/{id}',                 'CompanyController@status'                         )->name('client_destroy');
+});
+
 // TYPE OF ASTHMA
 Route::group(['prefix' => 'asthma'], function (){
     Route::get          ('/',                            'AsthmaController@index'                          )->name('client');
@@ -40,6 +50,15 @@ Route::group(['prefix' => 'asthma'], function (){
     Route::get          ('/edit/{id}',                   'AsthmaController@edit'                           )->name('client_edit');
     Route::post         ('/update/{id}',                 'AsthmaController@update'                         )->name('client_update');
     Route::get          ('/destroy/{id}',                'AsthmaController@destroy'                        )->name('client_destroy');
+});
+
+// APPOINTMENT
+Route::group(['prefix' => 'appointment'], function (){
+    Route::get          ('/',                            'AppointmentController@index'                          )->name('client');
+    Route::post         ('/save',                        'AppointmentController@save'                           )->name('client_store');
+    Route::get          ('/edit/{id}',                   'AppointmentController@edit'                           )->name('client_edit');
+    Route::post         ('/update/{id}',                 'AppointmentController@update'                         )->name('client_update');
+    Route::get          ('/destroy/{id}',                'AppointmentController@destroy'                        )->name('client_destroy');
 });
 
 // TYPE OF ASTHMA
@@ -68,6 +87,7 @@ Route::group(['prefix' => 'symptoms'], function (){
 // SYMPTOMS
 Route::group(['prefix' => 'users'], function (){
     Route::get         ('/',                             'UserController@index'                           )->name('user');
+    Route::get         ('/admin',                        'UserController@admin'                           )->name('user');
     Route::post        ('/save',                         'UserController@save'                            )->name('user_save');
     Route::get         ('/edit/{id}',                    'UserController@edit'                            )->name('user_edit');
     Route::post        ('/update/{id}',                  'UserController@update'                          )->name('user_update');

@@ -57,7 +57,7 @@
                     </a>
                 @endif
                 <a class="btn btn-link" href="{{ route('register') }}">
-                    {{ __('Create Account') }}
+                    {{ __('Register') }}
                 </a>
             </div>
         </div>

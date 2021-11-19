@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 
 class AsthmaController extends Controller
 {
-    
     public function index() {
         $types = Asthma::orderBy('id', 'desc')->get();
         $symptoms = Symptoms::orderBy('id', 'desc')->get();
