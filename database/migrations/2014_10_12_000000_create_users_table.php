@@ -21,17 +21,14 @@ class CreateUsersTable extends Migration
             $table->string('gender')->nullable();
             $table->string('age')->nullable();
             $table->string('contact_no')->nullable();
+            $table->string('city')->nullable();
             $table->string('username')->nullable();
             $table->string('email')->unique();
             $table->string('password');
-            $table->unsignedBigInteger('company_id')->nullable();;
+            $table->string('company_id')->nullable();;
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
-
-            $table->foreign('company_id')
-                ->references('id')
-                ->on('companies');
         });
         
         DB::table('users')->insert([
@@ -42,7 +39,8 @@ class CreateUsersTable extends Migration
                 'lastname' => 'Account', 
                 'gender' => 'Male', 
                 'age' => '0', 
-                'contact_no' => '', 
+                'contact_no' => '',
+                'city' => '',
                 'username' => 'admin', 
                 'email' => 'admin@gmail.com', 
                 'password' => Hash::make('admin123')

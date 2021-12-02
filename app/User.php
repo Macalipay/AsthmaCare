@@ -26,6 +26,7 @@ class User extends Authenticatable
         'gender',
         'age',
         'contact_no',
+        'city',
         'email',
         'username',
         'company_id',
@@ -52,6 +53,6 @@ class User extends Authenticatable
 
     public function user_role()
     {
-        return $this->belongsTo(ModelHasRole::class, 'id', 'model_id');
+        return $this->hasOne(ModelHasRole::class, 'model_id', 'id');
     }
 }

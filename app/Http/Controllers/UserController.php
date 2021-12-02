@@ -21,7 +21,7 @@ class UserController extends Controller
 
     public function admin() {
         $users = User::with('user_role')->whereHas('user_role', function(Builder $query) {
-            $query->where('role_id','=','2');
+            $query->where('role_id','=','1');
         })
         ->orderBy('id', 'desc')->get();
         return view('backend.pages.users', compact('users'));

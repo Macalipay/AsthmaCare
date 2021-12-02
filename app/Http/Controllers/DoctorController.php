@@ -38,7 +38,7 @@ class DoctorController extends Controller
                     ->withInput();
         }
         else {
-            $request['password'] = Hash::make('doctor1');
+            $request['password'] = Hash::make('doctor123');
             
             $doctor = User::create($request->all());
             $last_id = $doctor->id;

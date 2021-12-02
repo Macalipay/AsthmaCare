@@ -7,7 +7,7 @@ use App\User;
 use App\asthma;
 use App\Patient;
 use App\Appointment;
-use App\ModelHasRoles;
+use App\ModelHasRole;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Auth;
@@ -18,6 +18,7 @@ class MobileAppController extends Controller
     protected function register(Request $request) {
         
         $message = "";
+        $last_id = "";
         if(User::where('email', $request->email)->where('username', $request->username)->get()->count() === 1) {
             $message = "both";
         }
@@ -32,8 +33,8 @@ class MobileAppController extends Controller
             $user = User::create($request->all());
             $last_id = $user->id;
 
-            $data = ModelHasRoles::create([
-                'role_id' => 3,
+            $data = ModelHasRole::create([
+                'role_id' => 5,
                 'model_type' => 'App\User',
                 'model_id' => $last_id,
             ]);
@@ -49,7 +50,7 @@ class MobileAppController extends Controller
         $message = "";
         $credentials = $request->only('username', 'password');
         if (Auth::attempt($credentials)) {
-            $user = User::where('username', $request->username)->with('roles')->first();
+            $user = User::where('username', $request->username)->with('user_role')->first();
             $message = "success";
         }
         else {
@@ -61,7 +62,7 @@ class MobileAppController extends Controller
 
     protected function getDoctor() {
         $doctor = User::with('roles')->whereHas('roles', function($query) {
-            return $query->where('role_id', 2);
+            return $query->where('role_id', 4);
         })->get();
         return array("data"=>$doctor);
     }

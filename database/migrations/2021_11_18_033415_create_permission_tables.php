@@ -34,6 +34,7 @@ class CreatePermissionTables extends Migration
             $table->timestamps();
         });
 
+
         Schema::create($tableNames['model_has_permissions'], function (Blueprint $table) use ($tableNames, $columnNames) {
             $table->unsignedBigInteger('permission_id');
 
@@ -82,6 +83,18 @@ class CreatePermissionTables extends Migration
 
             $table->primary(['permission_id', 'role_id'], 'role_has_permissions_permission_id_role_id_primary');
         });
+        
+        DB::table('roles')->insert([
+            ['name' => 'Admin', 'guard_name' => 'web'],
+            ['name' => 'Moderator', 'guard_name' => 'web'],
+            ['name' => 'Staff', 'guard_name' => 'web'],
+            ['name' => 'Doctor', 'guard_name' => 'web'],
+            ['name' => 'User', 'guard_name' => 'web']
+        ]);
+
+        DB::table('model_has_roles')->insert([
+            ['role_id' => '1', 'model_type' => 'App\User', 'model_id' => '1']
+        ]);
 
         app('cache')
             ->store(config('permission.cache.store') != 'default' ? config('permission.cache.store') : null)

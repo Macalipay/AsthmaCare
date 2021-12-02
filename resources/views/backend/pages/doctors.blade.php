@@ -29,6 +29,7 @@
                                                 <th>Gender</th>
                                                 <th>Age</th>
                                                 <th>Contact No</th>
+                                                <th>City</th>
                                                 <th>Username</th>
                                                 <th>Email</th>
                                                 <th>Action</th>
@@ -42,6 +43,7 @@
                                                     <td>{{ $doctor->gender}}</td>
                                                     <td>{{ $doctor->age}}</td>
                                                     <td>{{ $doctor->contact_no}}</td>
+                                                    <td>{{ $doctor->city}}</td>
                                                     <td>{{ $doctor->username}}</td>
                                                     <td>{{ $doctor->email}}</td>
                                                     <td class="table-action">
@@ -112,6 +114,10 @@
                         <div class="form-group col-md-12">
                             <label for="name">Contact No</label>
                             <input type="text" class="form-control" id="contact_no" name="contact_no" placeholder="" value="{{ old('contact_no') }}" required>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="name">City</label>
+                            <input type="text" class="form-control" id="city" name="city" placeholder="" value="{{ old('city') }}" required>
                         </div>
                         <div class="form-group col-md-12">
                             <label for="name">Username</label>
