@@ -6,7 +6,7 @@
         <div class="sidebar-user">
             {{-- <img src="{{ asset('/img/logo.png')}}" class="img-fluid rounded-circle mb-2" alt="Linda Miller" /> --}}
             <div class="font-weight-bold">{{ Auth::user()->firstname.' '.Auth::user()->lastname}}</div>
-            <small>{{Auth::user()->roles[0]->name}}</small>
+            <small>{{Auth::user()->user_role[0]}}</small>
         </div>
 
         <ul class="sidebar-nav">

@@ -6,13 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use App\User;
 use App\Role;
-use App\ModelHasRoles;
+use App\ModelHasRole;
 
 class UserController extends Controller
 {
     //
     public function index() {
-        $users = User::with('roles')->whereHas('roles', function(Builder $query) {
+        $users = User::with('user_role')->whereHas('user_role', function(Builder $query) {
             $query->where('role_id','=','5');
         })
         ->orderBy('id', 'desc')->get();
@@ -20,7 +20,7 @@ class UserController extends Controller
     }
 
     public function admin() {
-        $users = User::with('roles')->whereHas('roles', function(Builder $query) {
+        $users = User::with('user_role')->whereHas('user_role', function(Builder $query) {
             $query->where('role_id','=','2');
         })
         ->orderBy('id', 'desc')->get();
