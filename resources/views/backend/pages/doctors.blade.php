@@ -116,6 +116,15 @@
                             <input type="text" class="form-control" id="contact_no" name="contact_no" placeholder="" value="{{ old('contact_no') }}" required>
                         </div>
                         <div class="form-group col-md-12">
+                            <label for="name">Company</label>
+                            <select class="form-control" name="company_id" id="company_id" required>
+                                <option value="">Please Select Company</option>
+                                @foreach($company as $item)
+                                    <option value="{{$item->id}}">{{$item->company_name.' - '.$item->city}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group col-md-12">
                             <label for="name">City</label>
                             <input type="text" class="form-control" id="city" name="city" placeholder="" value="{{ old('city') }}" required>
                         </div>
