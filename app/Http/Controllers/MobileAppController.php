@@ -7,6 +7,7 @@ use App\User;
 use App\asthma;
 use App\Patient;
 use App\Appointment;
+use App\Company;
 use App\ModelHasRole;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -60,11 +61,18 @@ class MobileAppController extends Controller
         return array("message"=>$message, "data"=>$user);
     }
 
-    protected function getDoctor() {
-        $doctor = User::with('roles')->whereHas('roles', function($query) {
+    protected function getDoctor(Request $request) {
+        $doctor = User::with('user_role', 'schedule')->whereHas('user_role', function($query) {
             return $query->where('role_id', 4);
-        })->get();
+        })->whereHas('schedule', function($query) use($request){
+            return $query->where('day', '=', $request->day);
+        })->where('company_id', $request->id)->get();
         return array("data"=>$doctor);
+    }
+
+    protected function getCompany() {
+        $company = Company::get();
+        return array("data"=>$company);
     }
 
     protected function getAsthma() {
@@ -95,7 +103,7 @@ class MobileAppController extends Controller
             "remarks" => $request->remarks,
             "patient_id" => $last_id,
             "user_id" => $request->user_id,
-            "status" => 'pending'
+            "status" => 0
         );
 
         $appointment_save = Appointment::create($appointment);
@@ -106,6 +114,12 @@ class MobileAppController extends Controller
     
     protected function getAppointment(Request $request) {
         $appointment = Appointment::with('patient')->where('user_id', $request->id)->orderBy('date', 'desc')->get();
+        
+        return array("data"=>$appointment);
+    }
+
+    protected function getExistingAppointment(Request $request) {
+        $appointment = Appointment::where('date', $request->date)->where('doctor_id', $request->doctor_id)->orderBy('date', 'desc')->get();
         
         return array("data"=>$appointment);
     }

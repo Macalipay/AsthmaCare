@@ -46,7 +46,7 @@ class DoctorController extends Controller
             $last_id = $doctor->id;
     
             $data = ModelHasRole::create([
-                'role_id' => 3,
+                'role_id' => 4,
                 'model_type' => 'App\User',
                 'model_id' => $last_id,
             ]);

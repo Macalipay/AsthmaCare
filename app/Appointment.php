@@ -11,9 +11,11 @@ class Appointment extends Model
         'date',
         'time',
         'doctor_id',
-        'remarks',
+        'patient_remarks',
+        'doctor_remarks',
         'patient_id',
         'user_id',
+        'link',
         'status'
     ];
 

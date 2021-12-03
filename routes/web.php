@@ -66,6 +66,8 @@ Route::group(['prefix' => 'mobile'], function (){
     Route::post         ('/register',                    'MobileAppController@register'                    )->name('mobile_app_registration');
     Route::post         ('/login',                       'MobileAppController@login'                       )->name('mobile_app_login');
     Route::post         ('/get-doctor',                  'MobileAppController@getDoctor'                   )->name('mobile_app_doctor');
+    Route::post         ('/get-company',                 'MobileAppController@getCompany'                  )->name('mobile_app_company');
+    Route::post         ('/get-existing-appointment',    'MobileAppController@getExistingAppointment'      )->name('mobile_app_exiting_appointment');
     Route::post         ('/get-asthma',                  'MobileAppController@getAsthma'                   )->name('mobile_app_asthma');
     Route::post         ('/get-appointment',             'MobileAppController@getAppointment'              )->name('mobile_app_appointment');
     Route::post         ('/get-incoming-patient',        'MobileAppController@getIncomingPatient'          )->name('mobile_app_appointment');
