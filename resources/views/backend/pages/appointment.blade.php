@@ -22,6 +22,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div id='calendar'></div>
+                                    {{-- {!! $calendar->calendar() !!} --}}
                                 </div>
                             </div>
                         </div>
@@ -49,25 +50,42 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Add Appointment</h5>
-                        <button appointment="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body m-3">
-                        <form id="modal-form" action="{{url('asthma/save')}}" method="post">
+                        <form id="modal-form" action="{{url('appointment/save')}}" method="post">
                             @csrf
                         <div class="form-group col-md-12">
-                            <label for="name">Name</label>
-                            <input appointment="text" class="form-control" id="asthma" name="asthma" placeholder="" required>
+                            <label for="name">Full Name</label>
+                            <input type="text" class="form-control" id="fullname" name="fullname" placeholder="" readonly>
                         </div>
                         <div class="form-group col-md-12">
-                            <label for="inputPassword4">Description</label>
-                            <textarea name="description" id="description" class="form-control" cols="30" rows="10" placeholder="Enter Description Here" required></textarea>
+                            <label for="name">Date</label>
+                            <input type="text" class="form-control" id="date" name="date" placeholder="" readonly>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="name">Time</label>
+                            <input type="text" class="form-control" id="time" name="time" placeholder="" readonly>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="name">Patient Remarks</label>
+                            <input type="text" class="form-control" id="patient_remarks" name="patient_remarks" placeholder="" readonly>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="name">Doctor Remarks</label>
+                            <input type="text" class="form-control" id="patient_remarks" name="patient_remarks" placeholder="" readonly>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="name">Zoom Links</label>
+                            <input type="text" class="form-control" id="link" name="link" placeholder="" readonly>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button appointment="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button appointment="submit" class="btn btn-primary submit-button">Add</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger submit-button">Cancel</button>
+                        <button type="button" class="btn btn-primary submit-button">Done Check Up</button>
                         </form>
                     </div>
                 </div>
@@ -78,34 +96,114 @@
 
 @section('scripts')
     <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    
     <script>
         var delete_id = '';
-        var SITEURL = "{{ url('/') }}";
+        var SITEURL = "{{ url('/appointment') }}";
+        $.ajaxSetup({
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
         function edit(id){
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: '/asthma/edit/' + id,
+                url: '/appointment/edit/' + id,
                 method: 'get',
                 data: {
 
                 },
                 success: function(data) {
-                    $('.modal-title').text('Update Appointment');
-                    $('.submit-button').text('Update');
+                    $('#defaultModalPrimary').modal('toggle');
+                    $('.modal-title').text('View Appointment');
+                       var name = data.appointments.patient;
                         $.each(data, function() {
                             $.each(this, function(k, v) {
-                               $('[name ="'+k+'"]').val(v);
+                                if(k == 'patient_id') {
+                                    $('#fullname').val(name.firstname + ' ' + name.middlename + ' ' + name.lastname);
+                                } else {
+                                    $('[name ="'+k+'"]').val(v);
+                                }
                             });
                         });
-                    $('#modal-form').attr('action', 'asthma/update/' + data.symptoms.id);
                 }
             });
 
         }
 
         $(function() {
+            var calendar = $('#calendar').fullCalendar({
+                    editable: true,
+                    events: SITEURL + "/",
+                    displayEventTime: false,
+                    editable: true,
+                    eventRender: function (event, element, view) {
+                        if (event.allDay === 'true') {
+                                event.allDay = true;
+                        } else {
+                                event.allDay = false;
+                        }
+                    },
+                    selectable: true,
+                    selectHelper: true,
+                    select: function (start, end, allDay) {
+                        var title = prompt('Event Title:');
+                        if (title) {
+                            var start = $.fullCalendar.formatDate(start, "Y-MM-DD");
+                            var end = $.fullCalendar.formatDate(end, "Y-MM-DD");
+                            $.ajax({
+                                url: SITEURL + "/fullcalenderAjax",
+                                data: {
+                                    title: title,
+                                    start: start,
+                                    end: end,
+                                    type: 'add'
+                                },
+                                type: "POST",
+                                success: function (data) {
+                                    displayMessage("Event Created Successfully");
+  
+                                    calendar.fullCalendar('renderEvent',
+                                        {
+                                            id: data.id,
+                                            title: title,
+                                            start: start,
+                                            end: end,
+                                            allDay: allDay
+                                        },true);
+  
+                                    calendar.fullCalendar('unselect');
+                                }
+                            });
+                        }
+                    },
+                    eventDrop: function (event, delta) {
+                        var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD");
+                        var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD");
+  
+                        $.ajax({
+                            url: SITEURL + '/fullcalenderAjax',
+                            data: {
+                                title: event.title,
+                                start: start,
+                                end: end,
+                                id: event.id,
+                                type: 'update'
+                            },
+                            type: "POST",
+                            success: function (response) {
+                                displayMessage("Event Updated Successfully");
+                            }
+                        });
+                    },
+                    eventClick: function (event) {
+                        edit(event.id);
+                    }
+ 
+                });
+ 
             $('#datatables').DataTable({
                 responsive: true,
                 "pageLength": 100
@@ -120,102 +218,10 @@
                 $('.submit-button').text('Add');
                 $('#modal-form').attr('action', 'asthma/save');
             })
-
-              
-            var calendar = $('#calendar').fullCalendar({
-                                header: {
-                                    left: 'prev,next today',
-                                    center: 'title',
-                                    right: 'month,basicWeek,basicDay'
-                                },
-                                editable: true,
-                                events: SITEURL + "/fullcalender",
-                                displayEventTime: false,
-                                editable: true,
-                                eventRender: function (event, element, view) {
-                                    if (event.allDay === 'true') {
-                                            event.allDay = true;
-                                    } else {
-                                            event.allDay = true;
-                                    }
-                                },
-                                selectable: true,
-                                selectHelper: true,
-                                select: function (start, end, allDay) {
-                                    var title = prompt('Event Title:');
-                                    if (title) {
-                                        var start = $.fullCalendar.formatDate(start, "Y-MM-DD");
-                                        var end = $.fullCalendar.formatDate(end, "Y-MM-DD");
-                                        $.ajax({
-                                            url: SITEURL + "/fullcalenderAjax",
-                                            data: {
-                                                title: title,
-                                                start: start,
-                                                end: end,
-                                                type: 'add'
-                                            },
-                                            type: "POST",
-                                            success: function (data) {
-                                                displayMessage("Event Created Successfully");
-            
-                                                calendar.fullCalendar('renderEvent',
-                                                    {
-                                                        id: data.id,
-                                                        title: title,
-                                                        start: start,
-                                                        end: end,
-                                                        allDay: allDay
-                                                    },true);
-            
-                                                calendar.fullCalendar('unselect');
-                                            }
-                                        });
-                                    }
-                                },
-                                eventDrop: function (event, delta) {
-                                    var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD");
-                                    var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD");
-            
-                                    $.ajax({
-                                        url: SITEURL + '/fullcalenderAjax',
-                                        data: {
-                                            title: event.title,
-                                            start: start,
-                                            end: end,
-                                            id: event.id,
-                                            type: 'update'
-                                        },
-                                        type: "POST",
-                                        success: function (response) {
-                                            displayMessage("Event Updated Successfully");
-                                        }
-                                    });
-                                },
-                                eventClick: function (event) {
-                                    var deleteMsg = confirm("Do you really want to delete?");
-                                    if (deleteMsg) {
-                                        $.ajax({
-                                            type: "POST",
-                                            url: SITEURL + '/fullcalenderAjax',
-                                            data: {
-                                                    id: event.id,
-                                                    type: 'delete'
-                                            },
-                                            success: function (response) {
-                                                calendar.fullCalendar('removeEvents', event.id);
-                                                displayMessage("Event Deleted Successfully");
-                                            }
-                                        });
-                                    }
-                                }
-            
-                            });
-            
             
             function displayMessage(message) {
                 toastr.success(message, 'Event');
             } 
-  
         });
 
         function confirmDelete(id) {
