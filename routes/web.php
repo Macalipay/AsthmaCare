@@ -75,6 +75,9 @@ Route::group(['prefix' => 'mobile'], function (){
     Route::post         ('/get-history',                 'MobileAppController@getPatientHistory'           )->name('mobile_app_history');
     Route::post         ('/get-monitoring',              'MobileAppController@getPatientList'              )->name('mobile_app_patient');
     Route::post         ('/set-appointment',             'MobileAppController@setAppointment'              )->name('mobile_app_appointment');
+    Route::post         ('/set-action-plan',             'MobileAppController@setActionPlan'               )->name('mobile_app_set_action_plan');
+    Route::post         ('/get-action-plan',             'MobileAppController@getActionPlan'               )->name('mobile_app_get_action_plan');
+    Route::post         ('/update-status',               'MobileAppController@updateStatus'                )->name('mobile_app_get_update_status');
 });
 
 // SYMPTOMS
