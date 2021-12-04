@@ -88,7 +88,7 @@ class MobileAppController extends Controller
             "asthma_id" => $request->asthma_id,
             "asthma_level" => '',
             "gender" => $request->gender,
-            "age" => $request->age,
+            "birthday" => $request->birthday,
             "contact" => $request->contact,
             "email" => $request->email
         );
