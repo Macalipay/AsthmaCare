@@ -24,7 +24,7 @@ class User extends Authenticatable
         'middlename',
         'lastname',
         'gender',
-        'age',
+        'birthday',
         'contact_no',
         'city',
         'email',
@@ -54,5 +54,10 @@ class User extends Authenticatable
     public function user_role()
     {
         return $this->hasOne(ModelHasRole::class, 'model_id', 'id');
+    }
+    
+    public function schedule()
+    {
+        return $this->hasMany(DoctorSchedule::class, 'doctor_id', 'id')->where('status', 0);
     }
 }

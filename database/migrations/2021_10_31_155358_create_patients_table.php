@@ -21,7 +21,7 @@ class CreatePatientsTable extends Migration
             $table->unsignedBigInteger('asthma_id');
             $table->string('asthma_level');
             $table->string('gender');
-            $table->string('age');
+            $table->string('birthday');
             $table->string('contact');
             $table->string('email');
             $table->timestamps();

@@ -14,7 +14,7 @@ class Patient extends Model
         'asthma_id',
         'asthma_level',
         'gender',
-        'age',
+        'birthday',
         'contact',
         'email'
     ];

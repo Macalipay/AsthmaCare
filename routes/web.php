@@ -67,6 +67,8 @@ Route::group(['prefix' => 'mobile'], function (){
     Route::post         ('/register',                    'MobileAppController@register'                    )->name('mobile_app_registration');
     Route::post         ('/login',                       'MobileAppController@login'                       )->name('mobile_app_login');
     Route::post         ('/get-doctor',                  'MobileAppController@getDoctor'                   )->name('mobile_app_doctor');
+    Route::post         ('/get-company',                 'MobileAppController@getCompany'                  )->name('mobile_app_company');
+    Route::post         ('/get-existing-appointment',    'MobileAppController@getExistingAppointment'      )->name('mobile_app_exiting_appointment');
     Route::post         ('/get-asthma',                  'MobileAppController@getAsthma'                   )->name('mobile_app_asthma');
     Route::post         ('/get-appointment',             'MobileAppController@getAppointment'              )->name('mobile_app_appointment');
     Route::post         ('/get-incoming-patient',        'MobileAppController@getIncomingPatient'          )->name('mobile_app_appointment');
@@ -74,6 +76,9 @@ Route::group(['prefix' => 'mobile'], function (){
     Route::post         ('/get-history',                 'MobileAppController@getPatientHistory'           )->name('mobile_app_history');
     Route::post         ('/get-monitoring',              'MobileAppController@getPatientList'              )->name('mobile_app_patient');
     Route::post         ('/set-appointment',             'MobileAppController@setAppointment'              )->name('mobile_app_appointment');
+    Route::post         ('/set-action-plan',             'MobileAppController@setActionPlan'               )->name('mobile_app_set_action_plan');
+    Route::post         ('/get-action-plan',             'MobileAppController@getActionPlan'               )->name('mobile_app_get_action_plan');
+    Route::post         ('/update-status',               'MobileAppController@updateStatus'                )->name('mobile_app_get_update_status');
 });
 
 // SYMPTOMS

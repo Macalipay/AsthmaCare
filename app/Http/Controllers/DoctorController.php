@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use App\User;
+use App\Company;
 use App\ModelHasRole;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
@@ -17,8 +18,9 @@ class DoctorController extends Controller
         $doctors = User::with('roles')->whereHas('roles', function(Builder $query) {
             $query->where('role_id','=','3');
         })->orderBy('id', 'desc')->get();
+        $company = Company::orderBy('id', 'desc')->get();
 
-        return view('backend.pages.doctors', compact('doctors'));
+        return view('backend.pages.doctors', compact('doctors', 'company'));
 
     }
 
@@ -44,7 +46,7 @@ class DoctorController extends Controller
             $last_id = $doctor->id;
     
             $data = ModelHasRole::create([
-                'role_id' => 3,
+                'role_id' => 4,
                 'model_type' => 'App\User',
                 'model_id' => $last_id,
             ]);

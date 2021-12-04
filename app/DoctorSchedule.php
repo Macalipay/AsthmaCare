@@ -4,12 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ActionPlan extends Model
+class DoctorSchedule extends Model
 {
+    //
     protected $fillable = [
-        'title',
-        'details',
-        'status',
-        'user_id'
+        'doctor_id',
+        'day',
+        'status'
     ];
 }
+
