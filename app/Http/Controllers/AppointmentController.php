@@ -4,12 +4,59 @@ namespace App\Http\Controllers;
 
 use App\Appointment;
 use Illuminate\Http\Request;
+use MaddHatter\LaravelFullcalendar\Facades\Calendar;
+use MaddHatter\LaravelFullcalendar\Event;
 
 class AppointmentController extends Controller
 {
-    public function index() {
-           
-        return view('backend.pages.appointment', compact('calendar', 'appointments'));
+    public function index(Request $request) 
+    {
+        if($request->ajax()) {
+       
+            $data = Appointment::with('patient')->select('id', 'time as title', 'date as start', 'date as end')->whereDate('date', '>=', $request->start)
+                      ->whereDate('date',   '<=', $request->end)
+                      ->get(['id', 'title', 'start', 'end']);
+ 
+            return response()->json($data);
+       }
+ 
+        return view('backend.pages.appointment');
+    }
+
+    public function ajax(Request $request)
+    {
+ 
+        switch ($request->type) {
+           case 'add':
+              $event = Event::create([
+                  'title' => $request->title,
+                  'start' => $request->start,
+                  'end' => $request->end,
+              ]);
+ 
+              return response()->json($event);
+             break;
+  
+           case 'update':
+              $event = Event::find($request->id)->update([
+                  'title' => $request->title,
+                  'start' => $request->start,
+                  'end' => $request->end,
+              ]);
+ 
+              return response()->json($event);
+             break;
+  
+           case 'delete':
+              $event = Event::find($request->id)->delete();
+  
+              return response()->json($event);
+             break;
+             
+           default:
+             # code...
+             break;
+        }
     }
 
     public function save(Request $request) {
@@ -20,10 +67,10 @@ class AppointmentController extends Controller
     
     public function edit($id)
     {
-        $appointments = Appointment::where('id', $id)->orderBy('id')->firstOrFail();
+        $appointments = Appointment::with('patient')->where('id', $id)->orderBy('id')->firstOrFail();
         return response()->json(compact('appointments'));
     }
-    
+
     public function update(Request $request, $id)
     {
         Appointment::find($id)->update($request->all());

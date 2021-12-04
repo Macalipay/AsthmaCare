@@ -56,6 +56,7 @@ Route::group(['prefix' => 'asthma'], function (){
 Route::group(['prefix' => 'appointment'], function (){
     Route::get          ('/',                            'AppointmentController@index'                          )->name('client');
     Route::post         ('/save',                        'AppointmentController@save'                           )->name('client_store');
+    Route::get          ('/fullcalendar',                'AppointmentController@fullcalendar'                           )->name('client_store');
     Route::get          ('/edit/{id}',                   'AppointmentController@edit'                           )->name('client_edit');
     Route::post         ('/update/{id}',                 'AppointmentController@update'                         )->name('client_update');
     Route::get          ('/destroy/{id}',                'AppointmentController@destroy'                        )->name('client_destroy');
