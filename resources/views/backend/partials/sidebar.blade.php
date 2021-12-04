@@ -73,7 +73,7 @@
             </li>
             @endrole
 
-            @role('Admin')
+            @role('Admin|Staff')
             <li class="sidebar-header">
                 Accounts
             </li>
