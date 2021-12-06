@@ -109,6 +109,17 @@ Route::group(['prefix' => 'doctors'], function (){
     Route::get         ('/edit/{id}',                    'DoctorController@edit'                          )->name('doctor_edit');
     Route::post        ('/update/{id}',                  'DoctorController@update'                        )->name('doctor_update');
     Route::get         ('/destroy/{id}',                 'DoctorController@destroy'                       )->name('doctor_destroy');
+    Route::post        ('/save-schedule',                'DoctorScheduleController@store'                 )->name('set_schedule');
+    Route::post        ('/get-schedule',                 'DoctorScheduleController@show'                  )->name('show_schedule');
+});
+
+// DOCTOR
+Route::group(['prefix' => 'staff'], function (){
+    Route::get         ('/',                             'StaffController@index'                         )->name('doctor');
+    Route::post        ('/save',                         'StaffController@save'                          )->name('staff_save');
+    Route::get         ('/edit/{id}',                    'StaffController@edit'                          )->name('staff_edit');
+    Route::post        ('/update/{id}',                  'StaffController@update'                        )->name('staff_update');
+    Route::get         ('/destroy/{id}',                 'StaffController@destroy'                       )->name('staff_destroy');
 });
 
 // DOCTOR

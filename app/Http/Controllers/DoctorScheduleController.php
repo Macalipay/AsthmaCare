@@ -35,7 +35,14 @@ class DoctorScheduleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $doctorSchedule = DoctorSchedule::where('doctor_id', $request->doctor_id)->where('day',$request->day)->count();
+        if($doctorSchedule >= 1) {
+            return 'failed';
+        }
+        else {
+            DoctorSchedule::create($request->all());
+            return 'success';
+        }
     }
 
     /**
@@ -44,9 +51,10 @@ class DoctorScheduleController extends Controller
      * @param  \App\DoctorSchedule  $doctorSchedule
      * @return \Illuminate\Http\Response
      */
-    public function show(DoctorSchedule $doctorSchedule)
+    public function show(Request $request)
     {
-        //
+        $sched = DoctorSchedule::where('doctor_id', $request->doctor_id)->get();
+        return $sched;
     }
 
     /**

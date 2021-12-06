@@ -4,16 +4,16 @@
         <div class="container-fluid">
             <div class="header">
                 <h1 class="header-title">
-                    Doctors
+                    Staff
                 </h1>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="card-title">Doctor List
+                            <h5 class="card-title">Staff List
                                 <button type="button" class="btn btn-primary add" data-toggle="modal" data-target="#defaultModalPrimary" style="float:right">
-                                    Add Doctors
+                                    Add Staff
                                 </button>
                             </h5>
                         </div>
@@ -36,20 +36,19 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($doctors as $key => $doctor)
+                                            @foreach ($staff as $key => $item)
                                                 <tr>
                                                     <td>{{ ++$key}}</td>
-                                                    <td>{{ $doctor->firstname.' '.$doctor->lastname}}</td>
-                                                    <td>{{ $doctor->gender}}</td>
-                                                    <td>{{ $doctor->birthday}}</td>
-                                                    <td>{{ $doctor->contact_no}}</td>
-                                                    <td>{{ $doctor->city}}</td>
-                                                    <td>{{ $doctor->username}}</td>
-                                                    <td>{{ $doctor->email}}</td>
+                                                    <td>{{ $item->firstname.' '.$item->lastname}}</td>
+                                                    <td>{{ $item->gender}}</td>
+                                                    <td>{{ $item->birthday}}</td>
+                                                    <td>{{ $item->contact_no}}</td>
+                                                    <td>{{ $item->city}}</td>
+                                                    <td>{{ $item->username}}</td>
+                                                    <td>{{ $item->email}}</td>
                                                     <td class="table-action">
-                                                        <a href="#" class="align-middle fas fa-fw fa-pen edit" title="Edit" data-toggle="modal" data-target="#defaultModalPrimary" id={{$doctor->id}}></a>
-                                                        <a href="#" data-toggle="modal" data-target="#confirmation" onclick="delete_id={{$doctor->id}};"><i class="align-middle fas fa-fw fa-trash"></i></a>
-                                                        <a href="#" class="align-middle fas fa-fw fa-calendar schedule" title="Add Schedule" data-toggle="modal" data-target="#addSchedule" onclick="showSchedule({{$doctor->id}})"></a>
+                                                        <a href="#" class="align-middle fas fa-fw fa-pen edit" title="Edit" data-toggle="modal" data-target="#defaultModalPrimary" id={{$item->id}}></a>
+                                                        <a href="#" data-toggle="modal" data-target="#confirmation" onclick="delete_id={{$item->id}};"><i class="align-middle fas fa-fw fa-trash"></i></a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -76,67 +75,19 @@
                 </div>
             </div>
             
-            <div class="modal fade" id="addSchedule" tabindex="-1" role="dialog" aria-labelledby="confirmationLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Doctor Schedule</h5>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label>Day</label>
-                                <select name="day" id="day" class="form-control">
-                                    <option value="">Please Select Day</option>
-                                    <option value="Sunday">Sunday</option>
-                                    <option value="Monday">Monday</option>
-                                    <option value="Tuesday">Tuesday</option>
-                                    <option value="Wednesday">Wednesday</option>
-                                    <option value="Thursday">Thursday</option>
-                                    <option value="Friday">Friday</option>
-                                    <option value="Saturday">Saturday</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Status</label>
-                                <select name="status" id="status" class="form-control">
-                                    <option value="">Please Select Day</option>
-                                    <option value="0">Present</option>
-                                    <option value="1">Day off</option>
-                                </select>
-                            </div>
-                            
-                            <table id="schedule" class="table table-striped" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Day</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-primary" onclick="setSchedule()">Set Schedule</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
         {{-- MODAL --}}
         <div class="modal fade" id="defaultModalPrimary" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Add Doctor</h5>
+                        <h5 class="modal-title">Add Staff</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body m-3">
-                        <form id="modal-form" action="{{url('doctors/save')}}" method="post">
+                        <form id="modal-form" action="{{url('staff/save')}}" method="post">
                             @csrf
                         <div class="form-group col-md-12">
                             <label for="name">Firstname</label>
@@ -202,35 +153,34 @@
     <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script>
         var delete_id = '';
-        var doctor_id = '';
 
         function edit(id){
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: '/doctors/edit/' + id,
+                url: '/staff/edit/' + id,
                 method: 'get',
                 data: {
 
                 },
                 success: function(data) {
-                    $('.modal-title').text('Update Doctor');
+                    $('.modal-title').text('Update Staff');
                     $('.submit-button').text('Update');
                     $.each(data, function() {
                         $.each(this, function(k, v) {
                             $('[name ="'+k+'"]').val(v);
                         });
                     });
+                    $('#modal-form').attr('action', '/staff/update/' + id);
                     console.log(data);
-                    $('#modal-form').attr('action', 'doctors/update/' + data.doctor.id);
                 }
             });
 
         }
 
         $(function() {
-            $('#datatables, #schedule').DataTable({
+            $('#datatables').DataTable({
                 responsive: true,
                 "pageLength": 100
             });
@@ -240,9 +190,9 @@
             });
 
             $('.add').click(function(){
-                $('.modal-title').text('Add Doctor');
+                $('.modal-title').text('Add Staff');
                 $('.submit-button').text('Add');
-                $('#modal-form').attr('action', 'doctors/save');
+                $('#modal-form').attr('action', 'staff/save');
             })
         });
 
@@ -251,41 +201,13 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: '/doctors/destroy/' + id,
+                url: '/staff/destroy/' + id,
                 method: 'get',
                 data: {
                 },
                 success: function(data) {
                     location.reload();
                 }
-            });
-        }
-
-        function setSchedule() {
-            $.post('/doctors/save-schedule', { "_token": "{{ csrf_token() }}", "doctor_id": doctor_id, "day": $('#day').val(), "status": $('#status').val() }, function(response) {
-                location.reload();
-            });
-        }
-
-        function showSchedule(id) {
-            doctor_id = id;
-            
-            $.post('/doctors/get-schedule', { "_token": "{{ csrf_token() }}", "doctor_id": doctor_id }, function(response) {
-                var html = "";
-                $.each(response, function(index, val) {
-                    console.log(val);
-                    html += "<tr>";
-                    html += "<td>"+index+"</td>";
-                    html += "<td>"+val.day+"</td>";
-                    if(val.status === "0"){
-                        html += "<td>Present</td>";
-                    }
-                    else {
-                        html += "<td>Day off</td>";
-                    }
-                    html += "</tr>";
-                });
-                $('#schedule tbody').html(html);
             });
         }
     </script>

@@ -71,6 +71,11 @@
                     <i class="align-middle mr-2 fa fa-fw fa-users" style="color: #153d77"></i> <span class="align-middle">Doctor</span>
                 </a>
             </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="/staff">
+                    <i class="align-middle mr-2 fa fa-fw fa-users" style="color: #153d77"></i> <span class="align-middle">Staff</span>
+                </a>
+            </li>
             @endrole
             
             @role('Admin|Moderator')
@@ -83,12 +88,12 @@
                     <i class="align-middle mr-2 fa fa-fw fa-users" style="color: #153d77"></i> <span class="align-middle">User</span>
                 </a>
             </li>
-
+{{-- 
             <li class="sidebar-item">
                 <a class="sidebar-link" href="{{ url('users/admin') }}">
                     <i class="align-middle mr-2 fa fa-fw fa-user-tie" style="color: #153d77"></i> <span class="align-middle">Admin</span>
                 </a>
-            </li>
+            </li> --}}
             @endrole
 
             @role('Doctor|Staff|Admin|Moderator')
