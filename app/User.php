@@ -60,4 +60,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(DoctorSchedule::class, 'doctor_id', 'id')->where('status', 0);
     }
+
+    public function appointment()
+    {
+        return $this->hasMany(User::class, 'doctor_id', 'id');
+    }
+
+    public function company()
+    {
+        return $this->hasOne(company::class, 'company_id', 'id');
+    }
 }

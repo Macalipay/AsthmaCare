@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Appointment;
+use Auth;
+use DB;
 use Illuminate\Http\Request;
 use MaddHatter\LaravelFullcalendar\Facades\Calendar;
 use MaddHatter\LaravelFullcalendar\Event;
@@ -11,12 +13,38 @@ class AppointmentController extends Controller
 {
     public function index(Request $request) 
     {
+
         if($request->ajax()) {
-       
-            $data = Appointment::with('patient')->select('id', 'time as title', 'date as start', 'date as end')->whereDate('date', '>=', $request->start)
-                      ->whereDate('date',   '<=', $request->end)
-                      ->get(['id', 'title', 'start', 'end']);
- 
+            if(Auth::user()->roles->first()->name == 'Staff') {
+                $data = Appointment::with('patient')->select('id', \DB::raw('(CASE 
+                                            WHEN status = 0 THEN CONCAT( time, " ( On-Going )") 
+                                            WHEN status = 1 THEN CONCAT( time, " ( Completed )")
+                                            WHEN status = 2 THEN CONCAT( time, " ( Cancelled )")
+                                            ELSE CONCAT( time, " ( Blocked Schedule )")
+                                            END) AS title'), 'date as start', 'date as end')->whereDate('date', '>=', $request->start)
+                ->whereDate('date',   '<=', $request->end)
+                ->get(['id', 'title', 'start', 'end']);
+            } else if(Auth::user()->roles->first()->name == 'Doctor') {
+                $data = Appointment::with('patient', 'doctor')->select('id', \DB::raw('(CASE 
+                                        WHEN status = 0 THEN CONCAT( time, " ( On-Going )") 
+                                        WHEN status = 1 THEN CONCAT( time, " ( Completed )")
+                                        WHEN status = 2 THEN CONCAT( time, " ( Cancelled )")
+                                        ELSE CONCAT( time, " ( Blocked Sched )")
+                                        END) AS title'), 'date as start', 'date as end')
+                ->where('doctor_id', Auth::user()->id)->whereDate('date', '>=', $request->start)
+                ->whereDate('date',   '<=', $request->end)
+                ->get(['id', 'title', 'start', 'end']);
+            } else {
+                $data = Appointment::with('patient', 'doctor')->select('id', \DB::raw('(CASE 
+                                        WHEN status = 0 THEN CONCAT( time, " ( On-Going )") 
+                                        WHEN status = 1 THEN CONCAT( time, " ( Completed )")
+                                        WHEN status = 2 THEN CONCAT( time, " ( Cancelled )")
+                                        ELSE CONCAT( time, " ( Blocked Sched )")
+                                        END) AS title'), 'date as start', 'date as end')
+                ->whereDate('date', '>=', $request->start)
+                ->whereDate('date',   '<=', $request->end)
+                ->get(['id', 'title', 'start', 'end']);
+            }
             return response()->json($data);
        }
  
@@ -69,6 +97,16 @@ class AppointmentController extends Controller
     {
         $appointments = Appointment::with('patient')->where('id', $id)->orderBy('id')->firstOrFail();
         return response()->json(compact('appointments'));
+    }
+
+    public function completed(Request $request, $id)
+    {
+        Appointment::find($id)->update(['status' => 1]);
+    }
+
+    public function cancel($id)
+    {
+        Appointment::where('id', $id)->update(['status' => 2]);
     }
 
     public function update(Request $request, $id)

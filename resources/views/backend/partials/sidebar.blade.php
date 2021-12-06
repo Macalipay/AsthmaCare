@@ -13,15 +13,7 @@
             <li class="sidebar-header">
                 Main
             </li>
-            @role('Moderator')
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="{{ url('dashboard')}}">
-                    <i class="align-middle mr-2 fa fa-fw fa-chart-pie" style="color: #153d77"></i> <span class="align-middle">Dashboard</span>
-                </a>
-            </li>
-            @endrole
-
-            @role('Admin')
+            @role('Admin|Moderator')
             <li class="sidebar-item">
                 <a class="sidebar-link" href="{{ url('dashboard')}}">
                     <i class="align-middle mr-2 fa fa-fw fa-chart-pie" style="color: #153d77"></i> <span class="align-middle">Dashboard</span>
@@ -45,13 +37,13 @@
             </li>
             @endrole
 
-            @role('Moderator|Doctor|Staff')
+            @role('Admin|Moderator|Doctor|Staff')
             <li class="sidebar-header">
                 Monitoring
             </li>
             @endrole
 
-            @role('Moderator')
+            @role('Admin|Moderator')
             <li class="sidebar-item">
                 <a class="sidebar-link" href="{{ url('company')}}">
                     <i class="align-middle mr-2 fa fa-fw fa-list" style="color: #153d77"></i> <span class="align-middle">Clinic/Hospital</span>
@@ -59,7 +51,7 @@
             </li>
             @endrole
 
-            @role('Doctor|Staff')
+            @role('Doctor|Staff|Admin|Moderator')
             <li class="sidebar-item">
                 <a class="sidebar-link" href="{{ url('patient')}}">
                     <i class="align-middle mr-2 fa fa-fw fa-list" style="color: #153d77"></i> <span class="align-middle">Patient List</span>
@@ -73,21 +65,15 @@
             </li>
             @endrole
 
-            @role('Admin')
-            <li class="sidebar-header">
-                Accounts
-            </li>
-           
-           
-
+            @role('Staff|Admin|Moderator')
             <li class="sidebar-item">
                 <a class="sidebar-link" href="/doctors">
                     <i class="align-middle mr-2 fa fa-fw fa-users" style="color: #153d77"></i> <span class="align-middle">Doctor</span>
                 </a>
             </li>
             @endrole
-
-            @role('Moderator')
+            
+            @role('Admin|Moderator')
             <li class="sidebar-header">
                 Accounts
             </li>
@@ -105,7 +91,7 @@
             </li>
             @endrole
 
-            @role('Admin|Doctor|Staff')
+            @role('Doctor|Staff|Admin|Moderator')
             <li class="sidebar-header">
                 Schedulling
             </li>

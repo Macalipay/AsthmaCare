@@ -13,4 +13,9 @@ class company extends Model
         'contact',
         'status',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

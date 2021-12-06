@@ -79,13 +79,9 @@ class RegisterController extends Controller
             'city' => $data['city'],
         ]);
 
-        ModelHasRole::create([
-            'role_id' => 2,
-            'model_type' => 'App\User',
-            'model_id' => $user->id + 1,
-        ]);
+      
 
-        return User::create([
+         $user = User::create([
             'firstname' => $data['firstname'],
             'middlename' => $data['middlename'],
             'lastname' => $data['lastname'],
@@ -93,5 +89,13 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+         ModelHasRole::create([
+            'role_id' => 3,
+            'model_type' => 'App\User',
+            'model_id' => $user->id,
+        ]);
+
+        return $user;
     }
 }

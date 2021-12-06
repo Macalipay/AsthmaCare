@@ -12,9 +12,9 @@
                     <div class="card">
                         <div class="card-header">
                             <h5 class="card-title">Record List
-                                <button appointment="button" class="btn btn-primary add" data-toggle="modal" data-target="#defaultModalPrimary" style="float:right">
-                                    Add Appointment
-                                </button>
+                                <button appointment="button" class="btn btn-primary add ml-2" data-toggle="modal" data-target="#blockAppointmentModal" style="float:right">
+                                    Block Schedule
+                                </button> 
                             </h5>
                         </div>
                         @include('backend.partials.flash-message')
@@ -45,7 +45,7 @@
             </div>
         </div>
         {{-- MODAL --}}
-        <div class="modal fade" id="defaultModalPrimary" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal fade" id="blockAppointmentModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -59,6 +59,55 @@
                             @csrf
                         <div class="form-group col-md-12">
                             <label for="name">Full Name</label>
+                            <input type="text" class="form-control" id="fullname" name="fullname" placeholder="">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="name">Date</label>
+                            <input type="text" class="form-control" id="date" name="date" placeholder="">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="name">Time</label>
+                            <input type="text" class="form-control" id="time" name="time" placeholder="">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="name">Patient Remarks</label>
+                            <input type="text" class="form-control" id="patient_remarks" name="patient_remarks" placeholder="">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="name">Doctor Remarks</label>
+                            <input type="text" class="form-control" id="patient_remarks" name="patient_remarks" placeholder="">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="name">Zoom Links</label>
+                            <input type="text" class="form-control" id="link" name="link" placeholder="">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger cancel-button">Cancel</button>
+                        <button type="button" class="btn btn-primary completed-button">Done Check Up</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+         {{-- MODAL --}}
+         <div class="modal fade" id="defaultModalPrimary" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add Appointment</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body m-3">
+                        <form id="modal-form" action="{{url('appointment/save')}}" method="post">
+                            @csrf
+                        <div class="form-group col-md-12">
+                            <label for="name">Full Name</label>
+                            <input type="hidden" class="form-control" id="appointment_id" name="appointment_id" placeholder="" >
                             <input type="text" class="form-control" id="fullname" name="fullname" placeholder="" readonly>
                         </div>
                         <div class="form-group col-md-12">
@@ -84,8 +133,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-danger submit-button">Cancel</button>
-                        <button type="button" class="btn btn-primary submit-button">Done Check Up</button>
+                        <button type="button" class="btn btn-danger cancel-button">Cancel</button>
+                        <button type="button" class="btn btn-primary completed-button">Done Check Up</button>
                         </form>
                     </div>
                 </div>
@@ -119,6 +168,7 @@
                     $('#defaultModalPrimary').modal('toggle');
                     $('.modal-title').text('View Appointment');
                        var name = data.appointments.patient;
+                       $('#appointment_id').val(data.appointments.id)
                         $.each(data, function() {
                             $.each(this, function(k, v) {
                                 if(k == 'patient_id') {
@@ -130,8 +180,36 @@
                         });
                 }
             });
+        }
+
+        function cancel(id){
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '/appointment/cancel/' + id,
+                method: 'get',
+                success: function(data) {
+                    location.reload();
+                }
+            });
 
         }
+
+        function completed(id){
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '/appointment/completed/' + id,
+                method: 'get',
+                success: function(data) {
+                    location.reload();
+                }
+            });
+
+        }
+
 
         $(function() {
             var calendar = $('#calendar').fullCalendar({
@@ -149,54 +227,10 @@
                     selectable: true,
                     selectHelper: true,
                     select: function (start, end, allDay) {
-                        var title = prompt('Event Title:');
-                        if (title) {
-                            var start = $.fullCalendar.formatDate(start, "Y-MM-DD");
-                            var end = $.fullCalendar.formatDate(end, "Y-MM-DD");
-                            $.ajax({
-                                url: SITEURL + "/fullcalenderAjax",
-                                data: {
-                                    title: title,
-                                    start: start,
-                                    end: end,
-                                    type: 'add'
-                                },
-                                type: "POST",
-                                success: function (data) {
-                                    displayMessage("Event Created Successfully");
-  
-                                    calendar.fullCalendar('renderEvent',
-                                        {
-                                            id: data.id,
-                                            title: title,
-                                            start: start,
-                                            end: end,
-                                            allDay: allDay
-                                        },true);
-  
-                                    calendar.fullCalendar('unselect');
-                                }
-                            });
-                        }
+                        
                     },
                     eventDrop: function (event, delta) {
-                        var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD");
-                        var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD");
-  
-                        $.ajax({
-                            url: SITEURL + '/fullcalenderAjax',
-                            data: {
-                                title: event.title,
-                                start: start,
-                                end: end,
-                                id: event.id,
-                                type: 'update'
-                            },
-                            type: "POST",
-                            success: function (response) {
-                                displayMessage("Event Updated Successfully");
-                            }
-                        });
+                       
                     },
                     eventClick: function (event) {
                         edit(event.id);
@@ -217,6 +251,14 @@
                 $('.modal-title').text('Add Appointment');
                 $('.submit-button').text('Add');
                 $('#modal-form').attr('action', 'asthma/save');
+            })
+
+            $('.cancel-button').click(function(){
+                cancel($('#appointment_id').val());
+            })
+
+            $('.completed-button').click(function(){
+                completed($('#appointment_id').val());
             })
             
             function displayMessage(message) {

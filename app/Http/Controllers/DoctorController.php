@@ -16,7 +16,7 @@ class DoctorController extends Controller
     protected function index() {
 
         $doctors = User::with('roles')->whereHas('roles', function(Builder $query) {
-            $query->where('role_id','=','3');
+            $query->where('role_id','=','4');
         })->orderBy('id', 'desc')->get();
         $company = Company::orderBy('id', 'desc')->get();
 
