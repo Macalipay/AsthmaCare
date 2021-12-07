@@ -44,53 +44,7 @@
                 </div>
             </div>
         </div>
-        {{-- MODAL --}}
-        <div class="modal fade" id="blockAppointmentModal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Add Appointment</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body m-3">
-                        <form id="modal-form" action="{{url('appointment/save')}}" method="post">
-                            @csrf
-                        <div class="form-group col-md-12">
-                            <label for="name">Full Name</label>
-                            <input type="text" class="form-control" id="fullname" name="fullname" placeholder="">
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="name">Date</label>
-                            <input type="text" class="form-control" id="date" name="date" placeholder="">
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="name">Time</label>
-                            <input type="text" class="form-control" id="time" name="time" placeholder="">
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="name">Patient Remarks</label>
-                            <input type="text" class="form-control" id="patient_remarks" name="patient_remarks" placeholder="">
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="name">Doctor Remarks</label>
-                            <input type="text" class="form-control" id="patient_remarks" name="patient_remarks" placeholder="">
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="name">Zoom Links</label>
-                            <input type="text" class="form-control" id="link" name="link" placeholder="">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-danger cancel-button">Cancel</button>
-                        <button type="button" class="btn btn-primary completed-button">Done Check Up</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+      
 
          {{-- MODAL --}}
          <div class="modal fade" id="defaultModalPrimary" tabindex="-1" role="dialog" aria-hidden="true">
@@ -124,17 +78,62 @@
                         </div>
                         <div class="form-group col-md-12">
                             <label for="name">Doctor Remarks</label>
-                            <input type="text" class="form-control" id="patient_remarks" name="patient_remarks" placeholder="" readonly>
+                            <input type="text" class="form-control" id="patient_remarks" name="patient_remarks" placeholder="">
                         </div>
                         <div class="form-group col-md-12">
                             <label for="name">Zoom Links</label>
-                            <input type="text" class="form-control" id="link" name="link" placeholder="" readonly>
+                            <input type="text" class="form-control" id="link" name="link" placeholder="">
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-danger cancel-button">Cancel</button>
+                        <button type="submit" class="btn btn-warning">Update</button>
                         <button type="button" class="btn btn-primary completed-button">Done Check Up</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+          {{-- MODAL --}}
+          <div class="modal fade" id="blockAppointmentModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Block Schedule</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body m-3">
+                        <form id="modal-form-block" action="{{url('appointment/save')}}" method="post">
+                            @csrf
+                        <div class="form-group col-md-12">
+                            <label for="name">Date</label>
+                            <input type="date" class="form-control" id="date" name="date" placeholder="">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="name">Time</label>
+                            <select class="form-control" name="time" id="time" required>
+                                    <option value="09:00AM - 10:00AM">09:00AM - 10:00AM</option>
+                                    <option value="10:00AM - 11:00AM">10:00AM - 11:00AM</option>
+                                    <option value="11:00AM - 12:00PM">11:00AM - 12:00PM</option>
+                                    <option value="01:00PM - 02:00PM">01:00PM - 02:00PM</option>
+                                    <option value="02:00PM - 03:00PM">02:00PM - 03:00PM</option>
+                                    <option value="04:00PM - 05:00PM">04:00PM - 05:00PM</option>
+                                    <option value="05:00PM - 06:00PM">05:00PM - 06:00PM</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label for="name">Doctor Remarks</label>
+                            <input type="text" class="form-control" id="doctor_remarks" name="doctor_remarks" placeholder="">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary block-button">Block</button>
                         </form>
                     </div>
                 </div>
@@ -165,8 +164,10 @@
 
                 },
                 success: function(data) {
-                    $('#defaultModalPrimary').modal('toggle');
-                    $('.modal-title').text('View Appointment');
+                    if(data.appointments.status != 3) {
+                        $('#defaultModalPrimary').modal('toggle');
+                        $('.modal-title').text('View Appointment');
+                        $('#modal-form').attr('action', 'appointment/update/' + data.appointments.id);
                        var name = data.appointments.patient;
                        $('#appointment_id').val(data.appointments.id)
                         $.each(data, function() {
@@ -178,6 +179,17 @@
                                 }
                             });
                         });
+                    } else {
+                        $('#blockAppointmentModal').modal('toggle');
+                        $('.block-button').hide();
+                        var name = data.appointments.patient;
+                        $('#appointment_id').val(data.appointments.id)
+                        $.each(data, function() {
+                            $.each(this, function(k, v) {
+                                $('[name ="'+k+'"]').val(v);
+                            });
+                        });
+                    }
                 }
             });
         }
@@ -193,7 +205,6 @@
                     location.reload();
                 }
             });
-
         }
 
         function completed(id){
@@ -207,7 +218,19 @@
                     location.reload();
                 }
             });
+        }
 
+        function update(id){
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '/appointment/update/' + id,
+                method: 'get',
+                success: function(data) {
+                    location.reload();
+                }
+            });
         }
 
 
@@ -248,9 +271,7 @@
             });
 
             $('.add').click(function(){
-                $('.modal-title').text('Add Appointment');
-                $('.submit-button').text('Add');
-                $('#modal-form').attr('action', 'asthma/save');
+                $('.block-button').show();
             })
 
             $('.cancel-button').click(function(){
@@ -261,6 +282,10 @@
                 completed($('#appointment_id').val());
             })
             
+            $('.update-button').click(function(){
+                completed($('#appointment_id').val());
+            })
+
             function displayMessage(message) {
                 toastr.success(message, 'Event');
             } 
