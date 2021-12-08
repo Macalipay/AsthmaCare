@@ -72,6 +72,7 @@ Route::group(['prefix' => 'mobile'], function (){
     Route::post         ('/get-company',                 'MobileAppController@getCompany'                  )->name('mobile_app_company');
     Route::post         ('/get-existing-appointment',    'MobileAppController@getExistingAppointment'      )->name('mobile_app_exiting_appointment');
     Route::post         ('/get-asthma',                  'MobileAppController@getAsthma'                   )->name('mobile_app_asthma');
+    Route::post         ('/get-first-aid',               'MobileAppController@getFirstAid'                 )->name('mobile_app_first_aid');
     Route::post         ('/get-appointment',             'MobileAppController@getAppointment'              )->name('mobile_app_appointment');
     Route::post         ('/get-incoming-patient',        'MobileAppController@getIncomingPatient'          )->name('mobile_app_appointment');
     Route::post         ('/get-incoming-appointment',    'MobileAppController@getIncomingAppointment'      )->name('mobile_app_appointment');
@@ -81,6 +82,9 @@ Route::group(['prefix' => 'mobile'], function (){
     Route::post         ('/set-action-plan',             'MobileAppController@setActionPlan'               )->name('mobile_app_set_action_plan');
     Route::post         ('/get-action-plan',             'MobileAppController@getActionPlan'               )->name('mobile_app_get_action_plan');
     Route::post         ('/update-status',               'MobileAppController@updateStatus'                )->name('mobile_app_get_update_status');
+    Route::post         ('/change-password',             'MobileAppController@change_password'             )->name('mobile_app_get_update_password');
+    Route::post         ('/get-appointment-by-id',       'MobileAppController@getAppointmentById'          )->name('mobile_app_get_appointment_by_id');
+    Route::post         ('/get-patient-by-id',           'MobileAppController@getPatientById'              )->name('mobile_app_get_patient_by_id');
 });
 
 // SYMPTOMS
@@ -122,13 +126,22 @@ Route::group(['prefix' => 'staff'], function (){
     Route::get         ('/destroy/{id}',                 'StaffController@destroy'                       )->name('staff_destroy');
 });
 
-// DOCTOR
+// TYPES OF ASTHMA
 Route::group(['prefix' => 'types-of-asthma'], function (){
     Route::get         ('/',                             'TypesOfAsthmaController@index'                         )->name('doctor');
     Route::post        ('/save',                         'TypesOfAsthmaController@save'                          )->name('doctor_save');
     Route::get         ('/edit/{id}',                    'TypesOfAsthmaController@edit'                          )->name('doctor_edit');
     Route::post        ('/update/{id}',                  'TypesOfAsthmaController@update'                        )->name('doctor_update');
     Route::get         ('/destroy/{id}',                 'TypesOfAsthmaController@destroy'                       )->name('doctor_destroy');
+});
+
+// FIRST AID
+Route::group(['prefix' => 'first-aid'], function (){
+    Route::get         ('/',                             'FirstAidController@index'                         )->name('first_aid');
+    Route::post        ('/save',                         'FirstAidController@save'                          )->name('first_aid_save');
+    Route::get         ('/edit/{id}',                    'FirstAidController@edit'                          )->name('first_aid_edit');
+    Route::post        ('/update/{id}',                  'FirstAidController@update'                        )->name('first_aid_update');
+    Route::get         ('/destroy/{id}',                 'FirstAidController@destroy'                       )->name('first_aid_destroy');
 });
 
 Auth::routes();

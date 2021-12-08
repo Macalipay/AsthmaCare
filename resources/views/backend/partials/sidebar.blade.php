@@ -71,14 +71,15 @@
                     <i class="align-middle mr-2 fa fa-fw fa-users" style="color: #153d77"></i> <span class="align-middle">Doctor</span>
                 </a>
             </li>
+            @endrole
+            
+            @role('Admin|Moderator')
+            
             <li class="sidebar-item">
                 <a class="sidebar-link" href="/staff">
                     <i class="align-middle mr-2 fa fa-fw fa-users" style="color: #153d77"></i> <span class="align-middle">Staff</span>
                 </a>
             </li>
-            @endrole
-            
-            @role('Admin|Moderator')
             <li class="sidebar-header">
                 Accounts
             </li>
@@ -136,6 +137,12 @@
             <li class="sidebar-item">
                 <a class="sidebar-link" href="/symptoms">
                     <i class="align-middle mr-2 fa fa-fw fa-file-word" style="color: #153d77"></i> <span class="align-middle">Symptoms</span>
+                </a>
+            </li>
+            
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="/first-aid">
+                    <i class="align-middle mr-2 fa fa-fw fa-first-aid" style="color: #153d77"></i> <span class="align-middle">First Aid</span>
                 </a>
             </li>
             @endrole('Doctor')
