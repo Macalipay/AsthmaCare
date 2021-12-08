@@ -88,11 +88,26 @@ class AppointmentController extends Controller
     }
 
     public function save(Request $request) {
-        $appointments = Appointment::create($request->all());
         
+        $appointments = Appointment::create($request->all());
         return redirect()->back()->with('success','Successfully Added');
     }
     
+    public function store(Request $request)
+    {
+        $appointment = $request->validate([
+            'date' => ['required', 'max:250'],
+            'time' => ['required', 'max:250'],
+            'doctor_remarks' => ['required', 'max:250'],
+        ]);
+
+        $request->request->add(['doctor_id' => Auth::user()->id, 'patient_id' => 1, 'user_id' => 1, 'status' => 3]);
+        Appointment::create($request->all());
+
+        return redirect()->back()->with('success','Successfully Added');
+    }
+
+
     public function edit($id)
     {
         $appointments = Appointment::with('patient')->where('id', $id)->orderBy('id')->firstOrFail();
