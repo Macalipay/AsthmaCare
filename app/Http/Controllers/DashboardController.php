@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Dashboard;
+use App\Appointment;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -14,7 +15,12 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('backend.pages.dashboard');
+        $appointment = Appointment::count();
+        $ongoing = Appointment::where('status', 0)->count();
+        $completed = Appointment::where('status', 1)->count();
+        $cancelled = Appointment::where('status', 3)->count();
+        $latest_appointments = Appointment::get(); 
+        return view('backend.pages.dashboard', compact('appointment', 'ongoing', 'completed', 'cancelled', 'latest_appointments'));
     }
 
     /**

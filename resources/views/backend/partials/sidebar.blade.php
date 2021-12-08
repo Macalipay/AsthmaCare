@@ -13,29 +13,11 @@
             <li class="sidebar-header">
                 Main
             </li>
-            @role('Admin|Moderator')
             <li class="sidebar-item">
                 <a class="sidebar-link" href="{{ url('dashboard')}}">
                     <i class="align-middle mr-2 fa fa-fw fa-chart-pie" style="color: #153d77"></i> <span class="align-middle">Dashboard</span>
                 </a>
             </li>
-            @endrole
-
-            @role('Doctor')
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="{{ url('dashboard')}}">
-                    <i class="align-middle mr-2 fa fa-fw fa-chart-pie" style="color: #153d77"></i> <span class="align-middle">Dashboard</span>
-                </a>
-            </li>
-            @endrole
-
-            @role('Staff')
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="{{ url('dashboard')}}">
-                    <i class="align-middle mr-2 fa fa-fw fa-chart-pie" style="color: #153d77"></i> <span class="align-middle">Dashboard</span>
-                </a>
-            </li>
-            @endrole
 
             @role('Admin|Moderator|Doctor|Staff')
             <li class="sidebar-header">
@@ -57,12 +39,12 @@
                     <i class="align-middle mr-2 fa fa-fw fa-list" style="color: #153d77"></i> <span class="align-middle">Patient List</span>
                 </a>
             </li>
-
+{{-- 
             <li class="sidebar-item">
                 <a class="sidebar-link" href="#">
                     <i class="align-middle mr-2 fa fa-fw fa-history" style="color: #153d77"></i> <span class="align-middle">Patient History</span>
                 </a>
-            </li>
+            </li> --}}
             @endrole
 
             @role('Staff|Admin|Moderator')
@@ -104,22 +86,6 @@
             <li class="sidebar-item">
                 <a class="sidebar-link" href="{{ url('appointment')}}">
                     <i class="align-middle mr-2 fa fa-fw fa-calendar-alt" style="color: #153d77"></i> <span class="align-middle">Appointment</span>
-                </a>
-            </li>
-
-            <li class="sidebar-header">
-                Reports
-            </li>
-           
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="#">
-                    <i class="align-middle mr-2 fa fa-fw fa-user-clock" style="color: #153d77"></i> <span class="align-middle">Logs</span>
-                </a>
-            </li>
-
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="#">
-                    <i class="align-middle mr-2 fa fa-fw fa-user-check" style="color: #153d77"></i> <span class="align-middle">Accept Patients</span>
                 </a>
             </li>
 

@@ -19,7 +19,7 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col mt-0">
-                                            <h5 class="card-title">Total Transaction</h5>
+                                            <h5 class="card-title">Appointment</h5>
                                         </div>
 
                                         <div class="col-auto">
@@ -30,9 +30,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <h1 class="display-5 mt-2 mb-4">1,342</h1>
+                                    <h1 class="display-5 mt-2 mb-4">{{$appointment}}</h1>
                                     <div class="mb-0">
-                                        <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> </span> Total count of success transaction.
+                                        <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> </span> Total count of appointment.
                                     </div>
                                 </div>
                             </div>
@@ -40,7 +40,7 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col mt-0">
-                                            <h5 class="card-title">Patient</h5>
+                                            <h5 class="card-title">Completed</h5>
                                         </div>
 
                                         <div class="col-auto">
@@ -51,9 +51,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <h1 class="display-5 mt-2 mb-4">554</h1>
+                                    <h1 class="display-5 mt-2 mb-4">{{$completed}}</h1>
                                     <div class="mb-0">
-                                        <span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i>  </span> Total Record of Patients.
+                                        <span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i>  </span> Total Record of Completed Appointment.
                                     </div>
                                 </div>
                             </div>
@@ -63,7 +63,7 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col mt-0">
-                                            <h5 class="card-title">Appointment</h5>
+                                            <h5 class="card-title">On-going</h5>
                                         </div>
 
                                         <div class="col-auto">
@@ -74,9 +74,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <h1 class="display-5 mt-2 mb-4">23</h1>
+                                    <h1 class="display-5 mt-2 mb-4">{{$ongoing}}</h1>
                                     <div class="mb-0">
-                                        <span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i></span> Total Active Appointment.
+                                        <span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i></span> Total Record of On-going Appointment.
                                     </div>
                                 </div>
                             </div>
@@ -84,7 +84,7 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col mt-0">
-                                            <h5 class="card-title">Employee</h5>
+                                            <h5 class="card-title">Cancelled</h5>
                                         </div>
 
                                         <div class="col-auto">
@@ -95,9 +95,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <h1 class="display-5 mt-2 mb-4">15</h1>
+                                    <h1 class="display-5 mt-2 mb-4">{{$cancelled}}</h1>
                                     <div class="mb-0">
-                                        <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i>  </span> Total Employee.
+                                        <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i>  </span> Total Record of Cancelled Appointment.
                                     </div>
                                 </div>
                             </div>
@@ -138,10 +138,15 @@
                         <tbody>
                             <tr>
                                 <td>Success Transaction</td>
-                                <td class="text-right">554</td>
+                                <td class="text-right">{{$ongoing}}</td>
                                 <td class="d-none d-xl-table-cell">
                                     <div class="progress">
-                                        <div class="progress-bar bg-primary-dark" role="progressbar" style="width: 43%;" aria-valuenow="43" aria-valuemin="0" aria-valuemax="100">43%</div>
+                                        @if (App\Appointment::where('status', 0)->count() != 0)
+                                        <div class="progress-bar bg-primary-dark" role="progressbar" style="width: {{(App\Appointment::where('status', 0)->count() / App\Appointment::where('status', '!=', 3)->count() ) * 100}}%" solve="{{App\Appointment::where('status', '!=', 3)->count()}}">
+                                        {{number_format((App\Appointment::where('status', 0)->count() / App\Appointment::where('status', '!=', 3)->count() ) * 100)}}%</div>
+                                        @else
+                                            <div class="progress-bar bg-primary-dark" role="progressbar" style="width: 0%" solve="0">0%</div>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -150,7 +155,12 @@
                                 <td class="text-right">350</td>
                                 <td class="d-none d-xl-table-cell">
                                     <div class="progress">
-                                        <div class="progress-bar bg-primary-dark" role="progressbar" style="width: 27%;" aria-valuenow="27" aria-valuemin="0" aria-valuemax="100">27%</div>
+                                        @if (App\Appointment::where('status', 1)->count() != 0)
+                                        <div class="progress-bar bg-primary-dark" role="progressbar" style="width: {{(App\Appointment::where('status', 1)->count() / App\Appointment::where('status', '!=', 3)->count() ) * 100}}%" solve="{{App\Appointment::where('status', '!=', 3)->count()}}">
+                                        {{number_format((App\Appointment::where('status', 1)->count() / App\Appointment::where('status', '!=', 3)->count() ) * 100)}}%</div>
+                                        @else
+                                            <div class="progress-bar bg-primary-dark" role="progressbar" style="width: 0%" solve="0">0%</div>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -159,7 +169,12 @@
                                 <td class="text-right">438</td>
                                 <td class="d-none d-xl-table-cell">
                                     <div class="progress">
-                                        <div class="progress-bar bg-primary-dark" role="progressbar" style="width: 22%;" aria-valuenow="22" aria-valuemin="0" aria-valuemax="100">22%</div>
+                                        @if (App\Appointment::where('status', 2)->count() != 0)
+                                        <div class="progress-bar bg-primary-dark" role="progressbar" style="width: {{(App\Appointment::where('status', 2)->count() / App\Appointment::where('status', '!=', 3)->count() ) * 100}}%" solve="{{App\Appointment::where('status', '!=', 3)->count()}}">
+                                        {{number_format((App\Appointment::where('status', 2)->count() / App\Appointment::where('status', '!=', 3)->count() ) * 100)}}%</div>
+                                        @else
+                                            <div class="progress-bar bg-primary-dark" role="progressbar" style="width: 0%" solve="0">0%</div>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -188,61 +203,36 @@
                                 </div>
                             </div>
                         </div>
-                        <h5 class="card-title mb-0">Active Appointment</h5>
+                        <h5 class="card-title mb-0">Top 10 Latest Appointment</h5>
                     </div>
-                    <table id="datatables-dashboard-traffic" class="table table-striped my-0">
+                    <table id="datatables" class="table table-striped" style="width:100%">
                         <thead>
                             <tr>
-                                <th>Doctor Name</th>
-                                <th class="text-right">Type</th>
-                                <th class="d-none d-xl-table-cell text-right">Patient</th>
-                                <th class="d-none d-xl-table-cell text-right">Contact #</th>
-                                <th class="d-none d-xl-table-cell text-right">Status</th>
+                                <th>#</th>
+                                <th>Doctor</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Patient</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Dr. Geaven Cruz</td>
-                                <td class="text-right">Allergic asthma</td>
-                                <td class="d-none d-xl-table-cell text-right">Jane Fermares</td>
-                                <td class="d-none d-xl-table-cell text-right">0975390235</td>
-                                <td class="d-none d-xl-table-cell text-right text-success">Completed</td>
-                            </tr>
-                            <tr>
-                                <td>Dr. Jerry Ang</td>
-                                <td class="text-right">Seasonal asthma</td>
-                                <td class="d-none d-xl-table-cell text-right">Susan Pascual</td>
-                                <td class="d-none d-xl-table-cell text-right">0945390235</td>
-                                <td class="d-none d-xl-table-cell text-right text-warning">On Process</td>
-                            </tr>
-                            <tr>
-                                <td>Dr. Abby Samuel</td>
-                                <td class="text-right">Nonallergic asthma</td>
-                                <td class="d-none d-xl-table-cell text-right">Christine Donaire</td>
-                                <td class="d-none d-xl-table-cell text-right">0944290554</td>
-                                <td class="d-none d-xl-table-cell text-right text-danger">Cancelled</td>
-                            </tr>
-                            <tr>
-                                <td>Dr. John Borja</td>
-                                <td class="text-right">Occupational asthma</td>
-                                <td class="d-none d-xl-table-cell text-right">Rodrigo Guad</td>
-                                <td class="d-none d-xl-table-cell text-right">09856423854</td>
-                                <td class="d-none d-xl-table-cell text-right text-success">Completed</td>
-                            </tr>
-                            <tr>
-                                <td>Dr. Michael Tray</td>
-                                <td class="text-right">Exercise-induced asthma</td>
-                                <td class="d-none d-xl-table-cell text-right">Jhayar Cruz</td>
-                                <td class="d-none d-xl-table-cell text-right">094417756825</td>
-                                <td class="d-none d-xl-table-cell text-right text-success">Completed</td>
-                            </tr>
-                            <tr>
-                                <td>Dr. Gilbert Bel</td>
-                                <td class="text-right">Difficult-to-control asthma</td>
-                                <td class="d-none d-xl-table-cell text-right">June Dacanay</td>
-                                <td class="d-none d-xl-table-cell text-right">094417756825</td>
-                                <td class="d-none d-xl-table-cell text-right text-danger">Hold</td>
-                            </tr>
+                            @foreach ($latest_appointments as $key => $appointment)
+                                <tr>
+                                    <td>{{ ++$key}}</td>
+                                    <td>{{ $appointment->doctor->firstname . ' ' . $appointment->doctor->lastname}}</td>
+                                    <td>{{ $appointment->date}}</td>
+                                    <td>{{ $appointment->time}}</td>
+                                    <td>{{ $appointment->patient->firstname . ' ' . $appointment->patient->lastname}}</td>
+                                    @if ($appointment->status == 0)
+                                        <td class="text-primary">On-going</td>
+                                    @elseif($appointment->status == 1)
+                                        <td class="text-success">Completed</td>
+                                    @elseif($appointment->status == 2)
+                                        <td class="text-danger">Cancelled</td>
+                                    @endif
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -266,7 +256,7 @@
                                 </div>
                             </div>
                         </div>
-                        <h5 class="card-title mb-0">Summary of Patient Asthma </h5>
+                        <h5 class="card-title mb-0">Summary of Appointment </h5>
                     </div>
                     <div class="card-body d-flex">
                         <div class="align-self-center w-100">
@@ -279,16 +269,16 @@
                             <table class="table mb-0">
                                 <tbody>
                                     <tr>
-                                        <td><i class="fas fa-circle text-primary fa-fw"></i> Allergic asthma </td>
-                                        <td class="text-right">45</td>
+                                        <td><i class="fas fa-circle text-primary fa-fw"></i> On-going Appointment </td>
+                                        <td class="text-right">{{$ongoing}}</td>
                                     </tr>
                                     <tr>
-                                        <td><i class="fas fa-circle text-warning fa-fw"></i> Severe asthma</td>
-                                        <td class="text-right">32</td>
+                                        <td><i class="fas fa-circle text-success fa-fw"></i> Completed Appointment</td>
+                                        <td class="text-right">{{$completed}}</td>
                                     </tr>
                                     <tr>
-                                        <td><i class="fas fa-circle text-danger fa-fw"></i>Seasonal asthma</td>
-                                        <td class="text-right">63</td>
+                                        <td><i class="fas fa-circle text-danger fa-fw"></i> Cancelled Appointment</td>
+                                        <td class="text-right">{{$cancelled}}</td>
                                     </tr>
                                 </tbody>
                             </table>
