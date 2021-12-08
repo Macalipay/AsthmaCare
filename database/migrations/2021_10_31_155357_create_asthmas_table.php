@@ -16,6 +16,7 @@ class CreateAsthmasTable extends Migration
         Schema::create('asthmas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('asthma');
+            $table->string('level');
             $table->longText('description');
             $table->unsignedBigInteger('symptoms_id');
             $table->timestamps();

@@ -26,6 +26,7 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>Name</th>
+                                                <th>Level</th>
                                                 <th>Description</th>
                                                 <th>Action</th>
                                             </tr>
@@ -35,6 +36,7 @@
                                                 <tr>
                                                     <td>{{ ++$key}}</td>
                                                     <td>{{ $type->asthma}}</td>
+                                                    <td>{{ $type->level}}</td>
                                                     <td>{{ $type->description}}</td>
                                                     <td class="table-action">
                                                         <a href="#" class="align-middle fas fa-fw fa-pen edit" title="Edit" data-toggle="modal" data-target="#defaultModalPrimary" id={{$type->id}}></a>
@@ -79,15 +81,24 @@
                         <form id="modal-form" action="{{url('asthma/save')}}" method="post">
                             @csrf
                         <div class="form-group col-md-12">
-                            <label for="name">Name</label>
+                            <label>Name</label>
                             <input type="text" class="form-control" id="asthma" name="asthma" placeholder="" required>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label>Level</label>
+                            <select name="level" id="level" class="form-control">
+                                <option value=""></option>
+                                <option value="Mild">Mild</option>
+                                <option value="Moderate">Moderate</option>
+                                <option value="Severe">Severe</option>
+                            </select>
                         </div>
                         <div class="form-group col-md-12">
                             <label for="inputPassword4">Description</label>
                             <textarea name="description" id="description" class="form-control" cols="30" rows="10" placeholder="Enter Description Here" required></textarea>
                         </div>
                         <div class="form-group col-md-12">
-                            <label for="inputPassword4">Description</label>
+                            <label>Symptoms</label>
                             <select name="symptoms_id" id="symptoms_id" class="form-control" required>
                                 <option value=""></option>
                                 @foreach ($symptoms as $symptom)

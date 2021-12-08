@@ -152,7 +152,7 @@ class MobileAppController extends Controller
     }
 
     protected function getExistingAppointment(Request $request) {
-        $appointment = Appointment::where('date', $request->date)->where('doctor_id', $request->doctor_id)->where('status', '=', '0')->orWhere('status', '=', '1')->orderBy('date', 'desc')->get();
+        $appointment = Appointment::where('date', $request->date)->where('doctor_id', $request->doctor_id)->orWhere('status', '=', '0')->where('status', '=', '1')->where('status', '=', '3')->orderBy('date', 'desc')->get();
         
         return array("data"=>$appointment);
     }
