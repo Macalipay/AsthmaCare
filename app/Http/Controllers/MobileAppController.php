@@ -9,6 +9,7 @@ use App\Patient;
 use App\Appointment;
 use App\ActionPlan;
 use App\Company;
+use App\FirstAid;
 use App\ModelHasRole;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -62,6 +63,20 @@ class MobileAppController extends Controller
         return array("message"=>$message, "data"=>$user);
     }
 
+    protected function change_password(Request $request) {
+        $message = "";
+        
+        $credentials = $request->only('id', 'password');
+        if (Auth::attempt($credentials)) {
+            User::where('id', $request->id)->update(["password"=>Hash::make($request->new_password), "status"=>"1"]);
+            $message = "success";
+        }
+        else {
+            $message = "error";
+        }
+        return array("message"=>$message);
+    }
+
     protected function getDoctor(Request $request) {
         $doctor = User::with('user_role', 'schedule')->whereHas('user_role', function($query) {
             return $query->where('role_id', 4);
@@ -79,6 +94,11 @@ class MobileAppController extends Controller
     protected function getAsthma() {
         $asthma = asthma::with('symptoms')->get();
         return array("data"=>$asthma);
+    }
+
+    protected function getFirstAid() {
+        $first_aid = FirstAid::get();
+        return array("data"=>$first_aid);
     }
 
     protected function setAppointment(Request $request) {
@@ -119,6 +139,18 @@ class MobileAppController extends Controller
         return array("data"=>$appointment);
     }
 
+    protected function getAppointmentById(Request $request) {
+        $appointment = Appointment::with('patient', 'doctor', 'patient.asthma')->where('id', $request->id)->first();
+        
+        return array("data"=>$appointment);
+    }
+    
+    protected function getPatientById(Request $request) {
+        $patient = Patient::with('asthma')->where('id', $request->id)->first();
+        
+        return array("data"=>$patient);
+    }
+
     protected function getExistingAppointment(Request $request) {
         $appointment = Appointment::where('date', $request->date)->where('doctor_id', $request->doctor_id)->where('status', '=', '0')->orWhere('status', '=', '1')->orderBy('date', 'desc')->get();
         
@@ -127,28 +159,28 @@ class MobileAppController extends Controller
 
     protected function getIncomingPatient(Request $request) {
 
-        $appointment = Appointment::with('patient')->where('doctor_id', $request->id)->where('status', 'approved')->whereDate('date', '=', Carbon::today()->toDateString())->orderBy('date', 'desc')->get();
+        $appointment = Appointment::groupBy('user_id')->select('user_id')->with('user_data')->where('doctor_id', $request->id)->where('status', '1')->get();
         return array("data"=>$appointment);
         
     }
 
     protected function getPatientList(Request $request) {
 
-        $patient = Patient::with('asthma')->orderBy('firstname', 'asc')->get();
+        $patient = Appointment::with('patient', 'patient.asthma')->where('doctor_id', $request->id)->where('status', '1')->orderBy('date', 'desc')->get();
         return array("data"=>$patient);
         
     }
     
     protected function getIncomingAppointment(Request $request) {
 
-        $appointment = Appointment::with('patient')->where('doctor_id', $request->id)->where('status', 'approved')->orderBy('date', 'desc')->get();
+        $appointment = Appointment::with('patient')->where('doctor_id', $request->id)->where('status', '!=', '1')->orderBy('date', 'desc')->get();
         return array("data"=>$appointment);
         
     }
 
     protected function getPatientHistory(Request $request) {
 
-        $appointment = Appointment::with('patient')->where('doctor_id', $request->id)->where('status', 'done')->orderBy('date', 'desc')->get();
+        $appointment = Appointment::with('patient', 'patient.asthma')->where('doctor_id', $request->id)->where('status', '1')->orderBy('date', 'desc')->get();
         return array("data"=>$appointment);
         
     }
