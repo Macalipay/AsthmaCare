@@ -120,7 +120,6 @@
 @endsection
 
 @section('scripts')
-    <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script>
         var delete_id = '';
         function edit(id){
@@ -150,7 +149,10 @@
         $(function() {
             $('#datatables').DataTable({
                 responsive: true,
-                "pageLength": 100
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ],
             });
 
             $( "table" ).on( "click", ".edit", function() {

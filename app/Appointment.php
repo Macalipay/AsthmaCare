@@ -30,10 +30,4 @@ class Appointment extends Model
     {
         return $this->belongsTo(User::class, 'doctor_id', 'id');
     }
-
-    public function user_data()
-    {
-        return $this->hasOne(User::class, 'id', 'user_id');
-    }
-
 }
