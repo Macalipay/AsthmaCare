@@ -88,7 +88,7 @@ class AppointmentController extends Controller
     }
 
     public function save(Request $request) {
-        
+        $request['date'] = date('Y/m/d', strtotime($request->date));
         $appointments = Appointment::create($request->all());
         return redirect()->back()->with('success','Successfully Added');
     }
@@ -101,6 +101,7 @@ class AppointmentController extends Controller
             'doctor_remarks' => ['required', 'max:250'],
         ]);
 
+        $request['date'] = date('Y/m/d', strtotime($request->date));
         $request->request->add(['doctor_id' => Auth::user()->id, 'patient_id' => 1, 'user_id' => 1, 'status' => 3]);
         Appointment::create($request->all());
 

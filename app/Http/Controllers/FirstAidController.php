@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\FirstAid;
+use App\asthma;
 use Illuminate\Http\Request;
 
 class FirstAidController extends Controller
@@ -14,8 +15,9 @@ class FirstAidController extends Controller
      */
     public function index()
     {
-        $first_aid = FirstAid::orderBy('id', 'desc')->get();
-        return view('backend.pages.first_aid', compact('first_aid'));
+        $first_aid = FirstAid::with('asthma')->orderBy('id', 'desc')->get();
+        $asthma = asthma::orderBy('id', 'desc')->get();
+        return view('backend.pages.first_aid', compact('first_aid', 'asthma'));
     }
 
     public function save(Request $request) {

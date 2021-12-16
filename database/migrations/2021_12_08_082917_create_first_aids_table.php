@@ -17,7 +17,12 @@ class CreateFirstAidsTable extends Migration
             $table->bigIncrements('id');
             $table->string("name");
             $table->string("description")->nullable;
+            $table->unsignedBigInteger('asthma_id');
             $table->timestamps();
+            
+            $table->foreign('asthma_id')
+                ->references('id')
+                ->on('asthmas');
         });
     }
 

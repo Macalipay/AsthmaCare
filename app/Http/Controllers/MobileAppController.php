@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\User;
 use App\asthma;
@@ -20,19 +21,26 @@ class MobileAppController extends Controller
 
     protected function register(Request $request) {
         
-        $message = "";
+        $message2 = "";
         $last_id = "";
-        if(User::where('email', $request->email)->where('username', $request->username)->get()->count() === 1) {
-            $message = "both";
+        
+
+        if (User::where('email', $request->email)->where('username', $request->username)->exists()) {
+            $message2 = "both";
+            return array("message"=>$message2, "id"=>$last_id);
         }
         else if(User::where('email', $request->email)->get()->count() === 1) {
-            $message = "email";
+            $message2 = "email";
+            return array("message"=>$message2, "id"=>$last_id);
         }
         else if(User::where('username', $request->username)->get()->count() === 1) {
-            $message = "username";
+            $message2 = "username";
+            return array("message"=>$message2, "id"=>$last_id);
         }
         else {
             $request['password'] = Hash::make($request->password);
+            $request['days_interval'] = "2";
+
             $user = User::create($request->all());
             $last_id = $user->id;
 
@@ -41,12 +49,22 @@ class MobileAppController extends Controller
                 'model_type' => 'App\User',
                 'model_id' => $last_id,
             ]);
+            $message2 = "success";
 
-            $message = "success";
+            return array("message"=>$message2, "id"=>$last_id);
         }
-        
+    }
 
-        return array("message"=>$message, "id"=>$last_id);
+    protected function emailSend(Request $request) {
+
+        $to_email = $request->email;
+        $data2 = array("email" => $request->email);
+
+        Mail::send('emails.mail', $data2, function($message) use ($to_email, $request) {
+            $message->to($to_email, $to_email)->subject("AsthmaCare Email Verification");
+            $message->from('asthmacare9@gmail.com','Email Verification');
+        });
+        return array("message"=>"sent", "id"=>"");
     }
 
     protected function login(Request $request) {
@@ -54,7 +72,12 @@ class MobileAppController extends Controller
         $credentials = $request->only('username', 'password');
         if (Auth::attempt($credentials)) {
             $user = User::where('username', $request->username)->with('user_role')->first();
-            $message = "success";
+            if($user->email_verified_at != null) {
+                $message = "success";
+            }
+            else {
+                $message = "verify";
+            }
         }
         else {
             $user = null;
@@ -96,8 +119,8 @@ class MobileAppController extends Controller
         return array("data"=>$asthma);
     }
 
-    protected function getFirstAid() {
-        $first_aid = FirstAid::get();
+    protected function getFirstAid(Request $request) {
+        $first_aid = FirstAid::where('asthma_id', $request->id)->get();
         return array("data"=>$first_aid);
     }
 
@@ -152,7 +175,7 @@ class MobileAppController extends Controller
     }
 
     protected function getExistingAppointment(Request $request) {
-        $appointment = Appointment::where('date', $request->date)->where('doctor_id', $request->doctor_id)->orWhere('status', '=', '0')->where('status', '=', '1')->where('status', '=', '3')->orderBy('date', 'desc')->get();
+        $appointment = Appointment::where('date', $request->date)->where('doctor_id', $request->doctor_id)->where('status', '!=', '2')->orderBy('date', 'desc')->get();
         
         return array("data"=>$appointment);
     }
@@ -207,6 +230,30 @@ class MobileAppController extends Controller
         
         return array("message"=>"success");
 
+    }
+
+    public function emailVerify($email) {
+        $user = User::where('email', $email)->update(["email_verified_at"=>date('Y-m-d h:i:s')]);
+        
+        return "Your Email has been verified!";
+    }
+
+    public function setInterval(Request $request) {
+        $user = Appointment::where('user_id', $request->id)->orderBy('date', 'desc')->first();
+        if($user !== null) {
+            $created_date = date('Y-m-d', strtotime($user->created_at. '+'.$request->interval.'day'));
+            $today = date('Y-m-d');
+            if($created_date <= $today) {
+                $message = "proceed";
+            }
+            else {
+                $message = "error";
+            }
+        }
+        else {
+            $message = "proceed";
+        }
+        return array("message"=>$message);
     }
 
 }

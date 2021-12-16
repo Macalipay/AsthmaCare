@@ -27,6 +27,7 @@
                                                 <th>#</th>
                                                 <th>Name</th>
                                                 <th>Description</th>
+                                                <th>Type of Asthma</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -36,6 +37,7 @@
                                                     <td>{{ ++$key}}</td>
                                                     <td>{{ $item->name}}</td>
                                                     <td>{{ $item->description}}</td>
+                                                    <td>{{ $item->asthma->asthma}}</td>
                                                     <td class="table-action">
                                                         <a href="#" class="align-middle fas fa-fw fa-pen edit" title="Edit" data-toggle="modal" data-target="#defaultModalPrimary" id={{$item->id}}></a>
                                                         <a href="#" data-toggle="modal" data-target="#confirmation" onclick="delete_id={{$item->id}};"><i class="align-middle fas fa-fw fa-trash"></i></a>
@@ -85,6 +87,15 @@
                         <div class="form-group col-md-12">
                             <label for="inputPassword4">Description</label>
                             <textarea name="description" id="description" class="form-control" cols="30" rows="10" placeholder="Enter Description Here" required></textarea>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="inputPassword4">Type of Asthma</label>
+                            <select name="asthma_id" id="asthma_id" class="form-control" required>
+                                <option value="">Please select Type of asthma</option>
+                                @foreach ($asthma as $item)
+                                    <option value="{{$item->id}}">{{$item->asthma}}</option>
+                                @endforeach
+                            </select>
                         </div>
                         
                     </div>

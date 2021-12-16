@@ -28,6 +28,7 @@ class CreateUsersTable extends Migration
             $table->string('company_id')->nullable();;
             $table->timestamp('email_verified_at')->nullable();
             $table->string('status')->nullable();
+            $table->integer('days_interval')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

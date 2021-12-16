@@ -24,7 +24,7 @@
                                                 <th>#</th>
                                                 <th>Name</th>
                                                 <th>Gender</th>
-                                                <th>Age</th>
+                                                <th>Birthday</th>
                                                 <th>Contact No.</th>
                                                 <th>Username</th>
                                             </tr>
@@ -35,7 +35,7 @@
                                                     <td>{{ ++$key}}</td>
                                                     <td>{{ $user->firstname." ".$user->middlename." ".$user->lastname }}</td>
                                                     <td>{{ $user->gender}}</td>
-                                                    <td>{{ $user->age}}</td>
+                                                    <td>{{ date('M-d-Y', strtotime($user->birthday)) }}</td>
                                                     <td>{{ $user->contact_no}}</td>
                                                     <td>{{ $user->username}}</td>
                                                 </tr>

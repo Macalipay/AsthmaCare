@@ -85,6 +85,9 @@ Route::group(['prefix' => 'mobile'], function (){
     Route::post         ('/change-password',             'MobileAppController@change_password'             )->name('mobile_app_get_update_password');
     Route::post         ('/get-appointment-by-id',       'MobileAppController@getAppointmentById'          )->name('mobile_app_get_appointment_by_id');
     Route::post         ('/get-patient-by-id',           'MobileAppController@getPatientById'              )->name('mobile_app_get_patient_by_id');
+    Route::post         ('/emailSend',                   'MobileAppController@emailSend'                   )->name('mobile_app_send_email');
+    Route::get          ('/verify-email/{email}',        'MobileAppController@emailVerify'                 )->name('mobile_app_email_verification');
+    Route::post         ('/setInterval',                 'MobileAppController@setInterval'                 )->name('mobile_app_set_interval');
 });
 
 // SYMPTOMS
