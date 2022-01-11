@@ -41,6 +41,7 @@ class DoctorController extends Controller
         }
         else {
             $request['password'] = Hash::make('doctor123');
+            $request['email_verified_at'] = date('Y-m-d h:i:s');
             
             $file = $request->photo->getClientOriginalName();
             $filename = pathinfo($file, PATHINFO_FILENAME);
