@@ -17,7 +17,7 @@ class AppointmentController extends Controller
         if($request->ajax()) {
             if(Auth::user()->roles->first()->name == 'Staff') {
                 $data = Appointment::with('patient')->select('id', \DB::raw('(CASE 
-                                            WHEN status = 0 THEN CONCAT( time, " ( On-Going )") 
+                                            WHEN status = 0 THEN CONCAT( time, " ( Upcoming )") 
                                             WHEN status = 1 THEN CONCAT( time, " ( Completed )")
                                             WHEN status = 2 THEN CONCAT( time, " ( Cancelled )")
                                             ELSE CONCAT( time, " ( Blocked Schedule )")
@@ -26,7 +26,7 @@ class AppointmentController extends Controller
                 ->get(['id', 'title', 'start', 'end']);
             } else if(Auth::user()->roles->first()->name == 'Doctor') {
                 $data = Appointment::with('patient', 'doctor')->select('id', \DB::raw('(CASE 
-                                        WHEN status = 0 THEN CONCAT( time, " ( On-Going )") 
+                                        WHEN status = 0 THEN CONCAT( time, " ( Upcoming )") 
                                         WHEN status = 1 THEN CONCAT( time, " ( Completed )")
                                         WHEN status = 2 THEN CONCAT( time, " ( Cancelled )")
                                         ELSE CONCAT( time, " ( Blocked Sched )")
@@ -36,7 +36,7 @@ class AppointmentController extends Controller
                 ->get(['id', 'title', 'start', 'end']);
             } else {
                 $data = Appointment::with('patient', 'doctor')->select('id', \DB::raw('(CASE 
-                                        WHEN status = 0 THEN CONCAT( time, " ( On-Going )") 
+                                        WHEN status = 0 THEN CONCAT( time, " ( Upcoming )") 
                                         WHEN status = 1 THEN CONCAT( time, " ( Completed )")
                                         WHEN status = 2 THEN CONCAT( time, " ( Cancelled )")
                                         ELSE CONCAT( time, " ( Blocked Sched )")

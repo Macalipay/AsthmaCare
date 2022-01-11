@@ -42,7 +42,16 @@ class DoctorController extends Controller
         else {
             $request['password'] = Hash::make('doctor123');
             
-            $doctor = User::create($request->all());
+            $file = $request->photo->getClientOriginalName();
+            $filename = pathinfo($file, PATHINFO_FILENAME);
+    
+            $imageName = $filename.time().'.'.$request->photo->extension();  
+            $image = $request->photo->move(public_path('img/doctor'), $imageName);
+    
+            $requestData = $request->all();
+            $requestData['photo'] = $imageName;
+
+            $doctor = User::create($requestData);
             $last_id = $doctor->id;
     
             $data = ModelHasRole::create([

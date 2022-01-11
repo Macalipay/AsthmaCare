@@ -12,6 +12,7 @@ class company extends Model
         'city',
         'contact',
         'status',
+        'photo',
     ];
 
     public function user()

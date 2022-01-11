@@ -27,6 +27,7 @@ Route::group(['prefix' => 'dashboard'], function (){
 // PATIENT
 Route::group(['prefix' => 'patient'], function (){
     Route::get          ('/',                            'PatientController@index'                          )->name('client');
+    Route::get          ('/history/{id}',                'PatientController@patient_history'                )->name('client_store');
     Route::post         ('/save',                        'PatientController@store'                          )->name('client_store');
     Route::get          ('/edit/{id}',                   'PatientController@edit'                           )->name('client_edit');
     Route::post         ('/update/{id}',                 'PatientController@update'                         )->name('client_update');

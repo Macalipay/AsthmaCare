@@ -39,7 +39,7 @@
 						<div class="card">
 							<div class="card-body">
 								<div class="m-sm-8">
-                                    <form method="POST" action="{{ route('register') }}">
+                                    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                                         @csrf
                                         <h5>Administrator Information</h5>
                 
@@ -125,6 +125,14 @@
                                             </div>
                                         </div>
 
+                                        <div class="form-group row">
+                                            <label for="name" class="col-md-4 col-form-label text-md-right">Upload Permit</label>
+                
+                                            <div class="col-md-6">
+                                                <input type="file" class="form-control" id="photo"  name="photo" value="{{ old('photo') }}" required autocomplete="photo" autofocus>
+                                            </div>
+                                        </div>
+
                                         </div>
                                         <div class="form-group row mb-0">
                                             <div class="col-md-6 offset-md-4">
@@ -133,6 +141,7 @@
                                                 </button>
                                             </div>
                                         </div>
+                                        
                                     </form>
 								</div>
 							</div>

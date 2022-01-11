@@ -47,6 +47,7 @@
                                                     <td>{{ $patient->contact}}</td>
                                                     <td>{{ $patient->email}}</td>
                                                     <td class="table-action">
+                                                        <a href="{{url('patient/history/' . $patient->id)}}"><i class="align-middle fas fa-fw fa-file-medical" title="Patient History"></i></a>
                                                         <a href="#" class="align-middle fas fa-fw fa-pen edit" title="Edit" data-toggle="modal" data-target="#defaultModalPrimary" id={{$patient->id}}></a>
                                                         <a href="{{url('patient/destroy/' . $patient->id)}}" onclick="alert('Are you sure you want to Delete?')"><i class="align-middle fas fa-fw fa-trash"></i></a>
                                                     </td>
@@ -160,7 +161,21 @@
                 responsive: true,
                 dom: 'Bfrtip',
                 buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
+                {
+                extend: ['print'], 
+                title: 'Patient List',
+                        customize: function ( win ) {
+                            $(win.document.body)
+                                .css( 'font-size', '10pt' )
+                                .prepend(
+                                    '<img src="{!! asset("/img/logo.png") !!}" style="width:200px; height:200px; top:80; right:80; float:right" />'
+                                );
+        
+                            $(win.document.body).find( 'table' )
+                                .addClass( 'compact' )
+                                .css( 'font-size', 'inherit' );
+                        }
+                    }
                 ],
             });
 

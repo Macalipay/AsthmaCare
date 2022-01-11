@@ -141,7 +141,24 @@
         $(function() {
             $('#datatables').DataTable({
                 responsive: true,
-                "pageLength": 100
+                dom: 'Bfrtip',
+                buttons: [
+                {
+                extend: ['print'], 
+                title: 'First Aid List',
+                        customize: function ( win ) {
+                            $(win.document.body)
+                                .css( 'font-size', '10pt' )
+                                .prepend(
+                                    '<img src="{!! asset("/img/logo.png") !!}" style="width:200px; height:200px; top:80; right:80; float:right" />'
+                                );
+        
+                            $(win.document.body).find( 'table' )
+                                .addClass( 'compact' )
+                                .css( 'font-size', 'inherit' );
+                        }
+                    }
+                ],
             });
 
             $( "table" ).on( "click", ".edit", function() {

@@ -63,7 +63,7 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col mt-0">
-                                            <h5 class="card-title">On-going</h5>
+                                            <h5 class="card-title">Upcoming</h5>
                                         </div>
 
                                         <div class="col-auto">
@@ -76,7 +76,7 @@
                                     </div>
                                     <h1 class="display-5 mt-2 mb-4">{{$ongoing}}</h1>
                                     <div class="mb-0">
-                                        <span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i></span> Total Record of On-going Appointment.
+                                        <span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i></span> Total Record of Upcoming Appointment.
                                     </div>
                                 </div>
                             </div>
@@ -165,7 +165,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>On-going Transaction</td>
+                                <td>Upcoming Transaction</td>
                                 <td class="text-right">438</td>
                                 <td class="d-none d-xl-table-cell">
                                     <div class="progress">
@@ -225,7 +225,7 @@
                                     <td>{{ $appointment->time}}</td>
                                     <td>{{ $appointment->patient->firstname . ' ' . $appointment->patient->lastname}}</td>
                                     @if ($appointment->status == 0)
-                                        <td class="text-primary">On-going</td>
+                                        <td class="text-primary">Upcoming</td>
                                     @elseif($appointment->status == 1)
                                         <td class="text-success">Completed</td>
                                     @elseif($appointment->status == 2)
@@ -269,7 +269,7 @@
                             <table class="table mb-0">
                                 <tbody>
                                     <tr>
-                                        <td><i class="fas fa-circle text-primary fa-fw"></i> On-going Appointment </td>
+                                        <td><i class="fas fa-circle text-primary fa-fw"></i> Upcoming Appointment </td>
                                         <td class="text-right">{{$ongoing}}</td>
                                     </tr>
                                     <tr>

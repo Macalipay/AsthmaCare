@@ -116,15 +116,20 @@
                             <label for="name">Contact No</label>
                             <input type="text" class="form-control" id="contact_no" name="contact_no" placeholder="" value="{{ old('contact_no') }}" required>
                         </div>
-                        <div class="form-group col-md-12">
-                            <label for="name">Company</label>
-                            <select class="form-control" name="company_id" id="company_id" required>
-                                <option value="">Please Select Company</option>
-                                @foreach($company as $item)
-                                    <option value="{{$item->id}}">{{$item->company_name.' - '.$item->city}}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                        @if (Auth::user()->roles->first()->name == 'Staff')
+                            <input type="text" class="form-control" id="company_id" name="company_id" placeholder="" value="{{Auth::user()->company_id}}" hidden>
+                        @else
+                            <div class="form-group col-md-12">
+                                <label for="name">Company</label>
+                                <select class="form-control" name="company_id" id="company_id" required>
+                                    <option value="">Please Select Company</option>
+                                    @foreach($company as $item)
+                                        <option value="{{$item->id}}">{{$item->company_name.' - '.$item->city}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @endif
+                        
                         <div class="form-group col-md-12">
                             <label for="name">City</label>
                             <input type="text" class="form-control" id="city" name="city" placeholder="" value="{{ old('city') }}" required>
@@ -183,7 +188,21 @@
                 responsive: true,
                 dom: 'Bfrtip',
                 buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
+                {
+                extend: ['print'], 
+                title: 'Staff List',
+                        customize: function ( win ) {
+                            $(win.document.body)
+                                .css( 'font-size', '10pt' )
+                                .prepend(
+                                    '<img src="{!! asset("/img/logo.png") !!}" style="width:200px; height:200px; top:80; right:80; float:right" />'
+                                );
+        
+                            $(win.document.body).find( 'table' )
+                                .addClass( 'compact' )
+                                .css( 'font-size', 'inherit' );
+                        }
+                    }
                 ],
             });
 

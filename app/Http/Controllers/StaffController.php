@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use App\User;
+use Auth;
 use App\Company;
 use App\ModelHasRole;
 use Illuminate\Support\Facades\Validator;
@@ -14,7 +15,7 @@ class StaffController extends Controller
 {
     protected function index() {
 
-        $staff = User::with('roles')->whereHas('roles', function(Builder $query) {
+        $staff = User::with('roles')->where('company_id', Auth::user()->company_id)->whereHas('roles', function(Builder $query) {
             $query->where('role_id','=','3');
         })->orderBy('id', 'desc')->get();
         $company = Company::orderBy('id', 'desc')->get();

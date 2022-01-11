@@ -55,13 +55,15 @@
             </li>
             @endrole
             
-            @role('Admin|Moderator')
+            @role('Admin|Moderator|Staff')
             
             <li class="sidebar-item">
                 <a class="sidebar-link" href="/staff">
                     <i class="align-middle mr-2 fa fa-fw fa-users" style="color: #153d77"></i> <span class="align-middle">Staff</span>
                 </a>
             </li>
+
+            @role('Admin|Moderator')
             <li class="sidebar-header">
                 Accounts
             </li>
@@ -71,6 +73,7 @@
                     <i class="align-middle mr-2 fa fa-fw fa-users" style="color: #153d77"></i> <span class="align-middle">User</span>
                 </a>
             </li>
+            @endrole
 {{-- 
             <li class="sidebar-item">
                 <a class="sidebar-link" href="{{ url('users/admin') }}">

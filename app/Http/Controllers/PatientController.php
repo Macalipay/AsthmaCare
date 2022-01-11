@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Patient;
 use App\asthma;
+use App\Appointment;
 use Illuminate\Http\Request;
 
 class PatientController extends Controller
@@ -13,6 +14,13 @@ class PatientController extends Controller
         $patients = Patient::orderBy('id', 'desc')->get();
         $asthmas = asthma::orderBy('id', 'desc')->get();
         return view('backend.pages.patient', compact('patients', 'asthmas'));
+    }
+
+    public function patient_history($id)
+    {
+        $patient = Patient::where('id', $id)->orderBy('id', 'desc')->first();
+        $appointments = Appointment::where('patient_id', $id)->orderBy('id', 'desc')->get();
+        return view('backend.pages.patient_history', compact('patient', 'appointments'));
     }
 
     public function store(Request $request) {

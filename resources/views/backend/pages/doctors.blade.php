@@ -31,7 +31,9 @@
                                                 <th>Contact No</th>
                                                 <th>City</th>
                                                 <th>Username</th>
+                                                <th>License No.</th>
                                                 <th>Email</th>
+                                                <th>Photo</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -45,7 +47,9 @@
                                                     <td>{{ $doctor->contact_no}}</td>
                                                     <td>{{ $doctor->city}}</td>
                                                     <td>{{ $doctor->username}}</td>
+                                                    <td>{{ $doctor->license}}</td>
                                                     <td>{{ $doctor->email}}</td>
+                                                    <td width="400px"> <img src="{{ asset('img/doctor/' . $doctor->photo)}}" alt="No Photo" srcset="" style="width:30%; height:30%"> </td>
                                                     <td class="table-action">
                                                         <a href="#" class="align-middle fas fa-fw fa-pen edit" title="Edit" data-toggle="modal" data-target="#defaultModalPrimary" id={{$doctor->id}}></a>
                                                         <a href="#" data-toggle="modal" data-target="#confirmation" onclick="delete_id={{$doctor->id}};"><i class="align-middle fas fa-fw fa-trash"></i></a>
@@ -136,7 +140,7 @@
                         </button>
                     </div>
                     <div class="modal-body m-3">
-                        <form id="modal-form" action="{{url('doctors/save')}}" method="post">
+                        <form id="modal-form" action="{{url('doctors/save')}}" method="post" enctype="multipart/form-data">
                             @csrf
                         <div class="form-group col-md-12">
                             <label for="name">Firstname</label>
@@ -183,9 +187,18 @@
                             <input type="text" class="form-control" id="username" name="username" placeholder="" value="{{ old('username') }}" required>
                         </div>
                         <div class="form-group col-md-12">
+                            <label for="name">License Number</label>
+                            <input type="text" class="form-control" id="license" name="license" placeholder="" value="{{ old('license') }}" required>
+                        </div>
+                        <div class="form-group col-md-12">
                             <label for="name">Email Address</label>
                             <input type="text" class="form-control" id="email" name="email" placeholder="" value="{{ old('email') }}" required>
                         </div>
+                        <div class="form-group col-md-12">
+                            <label for="name">Photo</label>
+                            <input type="file" class="form-control" id="photo" name="photo" placeholder="" value="{{ old('photo') }}" required>
+                        </div>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -233,7 +246,21 @@
                 responsive: true,
                 dom: 'Bfrtip',
                 buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
+                {
+                extend: ['print'], 
+                title: 'Doctors List',
+                        customize: function ( win ) {
+                            $(win.document.body)
+                                .css( 'font-size', '10pt' )
+                                .prepend(
+                                    '<img src="{!! asset("/img/logo.png") !!}" style="width:200px; height:200px; top:80; right:80; float:right" />'
+                                );
+        
+                            $(win.document.body).find( 'table' )
+                                .addClass( 'compact' )
+                                .css( 'font-size', 'inherit' );
+                        }
+                    }
                 ],
             });
 

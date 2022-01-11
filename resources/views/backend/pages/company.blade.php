@@ -12,6 +12,9 @@
                     <div class="card">
                         <div class="card-header">
                             <h5 class="card-title">Record List</h5>
+                            <button type="button" class="btn btn-primary add" data-toggle="modal" data-target="#defaultModalPrimary" style="float:right">
+                                Add Clinic
+                            </button>
                         </div>
                         @include('backend.partials.flash-message')
                         <div class="col-12">
@@ -26,6 +29,7 @@
                                                 <th>Contact</th>
                                                 <th>City</th>
                                                 <th>Status</th>
+                                                <th>Permit</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -42,6 +46,7 @@
                                                     @else
                                                         <td>Inactive</td>
                                                     @endif
+                                                    <td width="400px"> <img src="{{ asset('img/permit/' . $company->photo)}}" alt="No Permit" srcset="" style="width:10%; height:10%"> </td>
                                                     <td class="table-action">
                                                         <a href="#" class="align-middle fas fa-fw fa-pen edit" title="Edit" data-toggle="modal" data-target="#defaultModalPrimary" id={{$company->id}}></a>
                                                         <a href="#" data-toggle="modal" data-target="#confirmation" onclick="delete_id={{$company->id}};"><i class="align-middle fas fa-fw fa-trash"></i></a>
@@ -82,20 +87,106 @@
                         </button>
                     </div>
                     <div class="modal-body m-3">
-                        <form id="modal-form" action="{{url('company/save')}}" method="post">
+                        <form method="POST" action="{{url('company/save')}}" enctype="multipart/form-data">
                             @csrf
-                        <div class="form-group col-md-12">
-                            <label for="name">Name</label>
-                            <input company="text" class="form-control" id="company" name="company" placeholder="" required>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label for="inputPassword4">Description</label>
-                            <textarea name="description" id="description" class="form-control" cols="30" rows="10" placeholder="Enter Description Here" required></textarea>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button company="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button company="submit" class="btn btn-primary submit-button">Add</button>
+                            <h5>Administrator Information</h5>
+    
+                            <div class="form-group row">
+                                <label for="name" class="col-md-4 col-form-label text-md-right">First Name</label>
+    
+                                <div class="col-md-6">
+                                    <input id="firstname" type="text" class="form-control" name="firstname" value="{{ old('firstname') }}" required autocomplete="firstname" autofocus>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="name" class="col-md-4 col-form-label text-md-right">Middle Name</label>
+    
+                                <div class="col-md-6">
+                                    <input id="middlename" type="text" class="form-control" name="middlename" value="{{ old('middlename') }}" required autocomplete="middlename" autofocus>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="name" class="col-md-4 col-form-label text-md-right">Last Name</label>
+    
+                                <div class="col-md-6">
+                                    <input id="lastname" type="text" class="form-control" name="lastname" value="{{ old('lastname') }}" required autocomplete="lastname" autofocus>
+                                </div>
+                            </div>
+    
+                            <div class="form-group row">
+                                <label for="email" class="col-md-4 col-form-label text-md-right">Email</label>
+    
+                                <div class="col-md-6">
+                                    <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autocomplete="email">
+                                </div>
+                            </div>
+    
+                            <div class="form-group row">
+                                <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+    
+                                <div class="col-md-6">
+                                    <input id="password" type="password" class="form-control" name="password" required autocomplete="new-password">
+                                </div>
+                            </div>
+    
+                            <div class="form-group row">
+                                <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+    
+                                <div class="col-md-6">
+                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                </div>
+                            </div>
+
+                            <h5>Clinic/Hospital Information</h5>
+
+                            <div class="form-group row">
+                                <label for="name" class="col-md-4 col-form-label text-md-right">Clinic/Hospital Name</label>
+    
+                                <div class="col-md-6">
+                                    <input id="company_name" type="text" class="form-control" name="company_name" value="{{ old('company_name') }}" required autocomplete="company_name" autofocus>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="name" class="col-md-4 col-form-label text-md-right">Address</label>
+    
+                                <div class="col-md-6">
+                                    <input id="address" type="text" class="form-control" name="address" value="{{ old('address') }}" required autocomplete="address" autofocus>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="name" class="col-md-4 col-form-label text-md-right">Contact</label>
+    
+                                <div class="col-md-6">
+                                    <input id="contact" type="text" class="form-control" name="contact" value="{{ old('contact') }}" required autocomplete="contact" autofocus>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="name" class="col-md-4 col-form-label text-md-right">City</label>
+    
+                                <div class="col-md-6">
+                                    <input id="city" type="text" class="form-control" name="city" value="{{ old('city') }}" required autocomplete="city" autofocus>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="name" class="col-md-4 col-form-label text-md-right">Upload Permit</label>
+    
+                                <div class="col-md-6">
+                                    <input type="file" class="form-control" id="photo"  name="photo" value="{{ old('photo') }}" required autocomplete="photo" autofocus>
+                                </div>
+                            </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Register</button>
+                                </form>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -137,7 +228,21 @@
                 responsive: true,
                 dom: 'Bfrtip',
                 buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
+                {
+                extend: ['print'], 
+                title: 'Company List',
+                        customize: function ( win ) {
+                            $(win.document.body)
+                                .css( 'font-size', '10pt' )
+                                .prepend(
+                                    '<img src="{!! asset("/img/logo.png") !!}" style="width:200px; height:200px; top:80; right:80; float:right" />'
+                                );
+        
+                            $(win.document.body).find( 'table' )
+                                .addClass( 'compact' )
+                                .css( 'font-size', 'inherit' );
+                        }
+                    }
                 ],
             });
 

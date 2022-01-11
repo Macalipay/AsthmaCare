@@ -71,15 +71,21 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $file = $data['photo']->getClientOriginalName();
+        $filename = pathinfo($file, PATHINFO_FILENAME);
+
+        $imageName = $filename.time().'.'.$data['photo']->extension();  
+        $image = $data['photo']->move(public_path('img/permit'), $imageName);
+
+        
         $user = User::select('id')->orderBy('id', 'desc')->first();
         $company = Company::create([
             'company_name' => $data['company_name'],
             'address' => $data['address'],
             'contact' => $data['contact'],
             'city' => $data['city'],
+            'photo' => $imageName,
         ]);
-
-      
 
          $user = User::create([
             'firstname' => $data['firstname'],
