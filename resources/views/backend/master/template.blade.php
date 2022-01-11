@@ -103,4 +103,45 @@
     <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
 @yield('scripts')
+<script>
+	$(document).ready(function(){
+		$.ajax({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			url: '/notification/show',
+			method: 'get',
+			data: {
+
+			},
+			success: function(data) {
+				notification = data.notifications;
+				$('.list-group').empty();
+				$('.message').empty();
+				$('.data_count').attr('data-count', data.count)
+				$('.message').append(data.count + ' New Messages')
+				for (let index = 0; index < notification.length; index++) {
+					if(data.notifications[index].status == 0) {
+						back_color = '#f7f5f5';
+					} else {
+						back_color = white;
+					}
+					$('.list-group').append('<a href="#" class="list-group-item" style = "background-color:' + back_color + '">'+
+						'<div class="row no-gutters align-items-center">'+
+							'<div class="col-2">'+
+								'<img src="/img/' + 'logo.jpg' + '" class="avatar img-fluid rounded-circle" alt="Michelle Bilodeau">'+
+							'</div>'+
+							'<div class="col-10 pl-2">'+
+								'<div class="text-dark">' + data.notifications[index].user_notif.firstname + ' ' + data.notifications[index].user_notif.lastname +'</div>'+
+								'<div class="text-muted small mt-1">'+ data.notifications[index].description + ' .</div>'+
+								'<div class="text-muted small mt-1">' + data.notifications[index].created_at + '</div>'+
+							'</div>'+
+						'</div>'+
+					'</a>')
+				}
+			  
+			}
+		});
+	})
+</script>
 </html>

@@ -74,4 +74,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(company::class, 'company_id', 'id');
     }
+
+    public function notification()
+    {
+        return $this->hasMany(notification::class);
+    }
 }

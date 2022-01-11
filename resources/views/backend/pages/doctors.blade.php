@@ -167,7 +167,7 @@
                         </div>
                         <div class="form-group col-md-12">
                             <label for="name">Contact No</label>
-                            <input type="text" class="form-control" id="contact_no" name="contact_no" placeholder="" value="{{ old('contact_no') }}" required>
+                            <input type="number" class="form-control" id="contact_no" name="contact_no" placeholder="" value="{{ old('contact_no') }}" required>
                         </div>
                         <div class="form-group col-md-12">
                             <label for="name">Company</label>
@@ -246,6 +246,7 @@
                 responsive: true,
                 dom: 'Bfrtip',
                 buttons: [
+                    'copy', 'excel', 'pdf',
                 {
                 extend: ['print'], 
                 title: 'Doctors List',

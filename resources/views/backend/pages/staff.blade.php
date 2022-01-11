@@ -188,6 +188,7 @@
                 responsive: true,
                 dom: 'Bfrtip',
                 buttons: [
+                    'copy', 'excel', 'pdf',
                 {
                 extend: ['print'], 
                 title: 'Staff List',

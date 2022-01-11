@@ -126,7 +126,7 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="name" class="col-md-4 col-form-label text-md-right">Upload Permit</label>
+                                            <label for="name" class="col-md-4 col-form-label text-md-right">Upload Permit and Requirements</label>
                 
                                             <div class="col-md-6">
                                                 <input type="file" class="form-control" id="photo"  name="photo" value="{{ old('photo') }}" required autocomplete="photo" autofocus>

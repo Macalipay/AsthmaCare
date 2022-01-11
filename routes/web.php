@@ -44,6 +44,16 @@ Route::group(['prefix' => 'company'], function (){
     Route::get          ('/status/{id}',                 'CompanyController@status'                         )->name('client_destroy');
 });
 
+// NOTFICATION
+Route::group(['prefix' => 'notification'], function (){
+    Route::get          ('/',                            'NotificationController@index'                          )->name('selection');
+    Route::post         ('/save',                        'NotificationController@store'                          )->name('reason');
+    Route::get          ('/show',                        'NotificationController@show'                           )->name('reason');
+    Route::post         ('/update/{id}',                 'NotificationController@update'                         )->name('reason_update');
+    Route::get          ('/destroy/{id}',                'NotificationController@destroy'                        )->name('reason_update');
+});
+
+
 // TYPE OF ASTHMA
 Route::group(['prefix' => 'asthma'], function (){
     Route::get          ('/',                            'AsthmaController@index'                          )->name('client');

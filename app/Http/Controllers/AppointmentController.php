@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Appointment;
+use App\notification;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
@@ -117,12 +118,24 @@ class AppointmentController extends Controller
 
     public function completed(Request $request, $id)
     {
+        $appointment = Appointment::find($id)->firstOrFail();
         Appointment::find($id)->update(['status' => 1]);
+        
+        notification::create([
+            'user_id' => $appointment->doctor_id,
+            'description' => 'Completed Schedule on ' . $appointment->date . ' ' . $appointment->time,
+        ]);
     }
 
     public function cancel($id)
     {
+        $appointment = Appointment::find($id)->firstOrFail();
         Appointment::where('id', $id)->update(['status' => 2]);
+
+        notification::create([
+            'user_id' => $appointment->doctor_id,
+            'description' => 'Cancelled Schedule on ' . $appointment->date . ' ' . $appointment->time,
+        ]);
     }
 
     public function update(Request $request, $id)
