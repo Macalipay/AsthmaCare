@@ -41,6 +41,7 @@ class DoctorController extends Controller
         }
         else {
             $request['password'] = Hash::make('doctor123');
+            $request['email_verified_at'] = date('Y-m-d h:i:s');
             
             $doctor = User::create($request->all());
             $last_id = $doctor->id;

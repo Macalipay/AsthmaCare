@@ -32,7 +32,8 @@ class User extends Authenticatable
         'company_id',
         'password',
         'status',
-        'days_interval'
+        'days_interval',
+        'email_verified_at'
     ];
 
     /**
