@@ -15,9 +15,16 @@ class StaffController extends Controller
 {
     protected function index() {
 
-        $staff = User::with('roles')->where('company_id', Auth::user()->company_id)->whereHas('roles', function(Builder $query) {
-            $query->where('role_id','=','3');
-        })->orderBy('id', 'desc')->get();
+        if(Auth::user()->roles->first()->name === "Admin") {
+            $staff = User::with('roles_data')->whereHas('roles_data', function(Builder $query) {
+                $query->where('role_id','=','3');
+            })->orderBy('id', 'desc')->get();
+        }
+        else {
+            $staff = User::with('roles_data')->where('company_id', Auth::user()->company_id)->whereHas('roles_data', function(Builder $query) {
+                $query->where('role_id','=','3');
+            })->orderBy('id', 'desc')->get();
+        }
         $company = Company::orderBy('id', 'desc')->get();
 
         return view('backend.pages.staff', compact('staff', 'company'));
