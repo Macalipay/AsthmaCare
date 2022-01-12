@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\User;
 use App\Company;
 use App\ModelHasRole;
+use Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 
@@ -15,9 +16,16 @@ class DoctorController extends Controller
     
     protected function index() {
 
-        $doctors = User::with('roles')->whereHas('roles', function(Builder $query) {
-            $query->where('role_id','=','4');
-        })->orderBy('id', 'desc')->get();
+        if(Auth::user()->roles->first()->name === "Admin") {
+            $doctors = User::with('roles_data')->whereHas('roles_data', function(Builder $query) {
+                $query->where('role_id','=','4');
+            })->orderBy('id', 'desc')->get();
+        }
+        else {
+            $doctors = User::with('roles_data')->where('company_id', Auth::user()->company_id)->whereHas('roles_data', function(Builder $query) {
+                $query->where('role_id','=','4');
+            })->orderBy('id', 'desc')->get();
+        }
         $company = Company::orderBy('id', 'desc')->get();
 
         return view('backend.pages.doctors', compact('doctors', 'company'));
